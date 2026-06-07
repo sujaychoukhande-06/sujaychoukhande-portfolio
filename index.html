@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sujay Choukhande | Data Scientist & AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#00e5ff;--primary-dim:rgba(0,229,255,0.08);--secondary:#b388ff;--secondary-dim:rgba(179,136,255,0.08);--accent:#ffab40;--gold:#e6c068;--gold-bright:#ffd97d;--rose:#ff6b9d;--bg-deep:#060610;--bg-card:rgba(12,12,24,0.65);--bg-glass:rgba(255,255,255,0.025);--text-primary:#eaeaff;--text-secondary:#7a7a9e;--text-muted:#55556e;--border:rgba(255,255,255,0.06);--border-hover:rgba(0,229,255,0.25);--glow-cyan:0 0 25px rgba(0,229,255,0.15),0 0 50px rgba(0,229,255,0.05);--glow-purple:0 0 25px rgba(179,136,255,0.15);--glow-gold:0 0 25px rgba(230,192,104,0.15);--font-display:'Orbitron',monospace;--font-body:'Inter',system-ui,sans-serif;--font-heading:'Sora',sans-serif;--ease:cubic-bezier(0.16,1,0.3,1)}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgba(0,229,255,0.3) var(--bg-deep);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg-deep)}::-webkit-scrollbar-thumb{background:linear-gradient(var(--primary),var(--secondary));border-radius:10px}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);overflow-x:hidden;line-height:1.75;font-weight:400}
+::selection{background:rgba(0,229,255,0.2);color:#fff}
+
+/* LOADER - Terminal Style */
+#loader{position:fixed;inset:0;z-index:10000;background:var(--bg-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1.2s var(--ease),visibility 1.2s}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-ring{width:120px;height:120px;border-radius:50%;position:relative}
+.loader-ring::before,.loader-ring::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid transparent}
+.loader-ring::before{border-top-color:var(--primary);animation:spin 1.2s linear infinite}
+.loader-ring::after{border-right-color:var(--secondary);animation:spin 1.8s linear reverse infinite;inset:8px}
+.loader-core{position:absolute;inset:18px;border-radius:50%;border:2px solid transparent;border-bottom-color:var(--accent);animation:spin 2.5s linear infinite}
+.loader-inner{position:absolute;inset:30px;border-radius:50%;border:1px solid transparent;border-left-color:var(--rose);animation:spin 3.5s linear infinite}
+.loader-text{margin-top:36px;font-family:var(--font-heading);font-size:11px;letter-spacing:6px;color:var(--primary);text-shadow:0 0 10px rgba(0,229,255,0.5);animation:pt 2s ease-in-out infinite}
+.loader-bar{width:200px;height:1px;background:var(--border);margin-top:20px;overflow:hidden}
+.loader-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--secondary),var(--accent));animation:lb 3s ease-out forwards}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes pt{0%,100%{opacity:.3}50%{opacity:1}}@keyframes lb{to{width:100%}}
+
+/* SCANLINE EFFECT */
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.scanline-effect{position:relative;overflow:hidden}
+.scanline-effect::after{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.4),transparent);animation:scanline 4s linear infinite}
+
+/* SHADER BG */
+#shader-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4}
+#shader-bg canvas{display:block;width:100%;height:100%}
+.ambient-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,229,255,0.01) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.01) 1px,transparent 1px);background-size:80px 80px}
+.scene-3d{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#scroll-progress-3d{position:fixed;bottom:30px;right:30px;width:60px;height:60px;z-index:999;pointer-events:none}
+
+/* GLASS PANEL */
+.glass-panel{background:rgba(255,255,255,0.025);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.06);transition:border-color 0.4s var(--ease)}
+.glass-panel:hover{border-color:rgba(0,229,255,0.25)}
+.glass-reflection{position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);transform:skewX(-20deg);transition:left .6s var(--ease);pointer-events:none;z-index:2}
+.project-card:hover .glass-reflection{left:125%}
+
+/* ICONS */
+.icon-box{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.icon-box.cyan{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(0,229,255,0.02));color:var(--primary);border:1px solid rgba(0,229,255,0.1)}
+.icon-box.purple{background:linear-gradient(135deg,rgba(179,136,255,0.08),rgba(179,136,255,0.02));color:var(--secondary);border:1px solid rgba(179,136,255,0.1)}
+.icon-box.gold{background:linear-gradient(135deg,rgba(230,192,104,0.08),rgba(230,192,104,0.02));color:var(--gold);border:1px solid rgba(230,192,104,0.1)}
+.icon-box.rose{background:linear-gradient(135deg,rgba(255,107,157,0.08),rgba(255,107,157,0.02));color:var(--rose);border:1px solid rgba(255,107,157,0.1)}
+.icon-sm{width:40px;height:40px;border-radius:10px;font-size:17px}.icon-lg{width:64px;height:64px;border-radius:18px;font-size:28px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,16,0.5);backdrop-filter:blur(30px) saturate(1.2);border-bottom:1px solid var(--border);transition:all .5s var(--ease);box-shadow:0 0 15px rgba(0,229,255,0.08)}
+.nav.scrolled{padding:12px 48px;background:rgba(6,6,16,0.85)}
+.nav-logo{font-family:var(--font-display);font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:3px;cursor:pointer}
+.nav-links{display:flex;gap:4px;list-style:none}
+.nav-links a{font-family:var(--font-heading);font-size:13px;font-weight:500;color:var(--text-secondary);text-decoration:none;padding:8px 18px;border-radius:8px;transition:all .35s var(--ease);letter-spacing:.5px}
+.nav-links a:hover,.nav-links a.active{color:var(--primary);background:var(--primary-dim)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:22px;height:1.5px;background:var(--text-secondary);transition:.3s var(--ease);border-radius:2px}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+
+/* SECTIONS */
+section{position:relative;z-index:1;min-height:100vh;padding:140px 80px 100px}
+.section-header{text-align:center;margin-bottom:80px}
+.section-tag{font-family:var(--font-heading);font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--secondary);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:16px;font-weight:500}
+.section-tag::before,.section-tag::after{content:'';width:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(179,136,255,0.4))}.section-tag::after{background:linear-gradient(90deg,rgba(179,136,255,0.4),transparent)}
+.section-title{font-family:var(--font-heading);font-size:clamp(30px,5vw,52px);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-0.02em}
+.section-title .gradient{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* HERO */
+#hero{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:0 80px;text-align:center;position:relative;overflow:hidden}
+.hero-content{position:relative;z-index:2;max-width:880px}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 22px;border:1px solid rgba(0,229,255,0.12);border-radius:50px;font-family:var(--font-heading);font-size:11px;letter-spacing:4px;color:var(--primary);margin-bottom:36px;background:rgba(0,229,255,0.02);animation:fl 4s ease-in-out infinite;font-weight:500}
+.hero-badge .dot{width:5px;height:5px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary);animation:pd 2s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes pd{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.4)}}
+.hero-name{font-family:var(--font-display);font-size:clamp(40px,9vw,88px);font-weight:900;line-height:1.05;margin-bottom:20px;letter-spacing:2px}
+.hero-name .first{display:block;color:#fff}.hero-name .last{display:block;background:linear-gradient(135deg,var(--primary),var(--secondary),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:gs 5s ease infinite}
+@keyframes gs{0%,100%{background-position:0% center}50%{background-position:100% center}}
+.hero-title{font-family:var(--font-heading);font-size:clamp(15px,2.5vw,22px);font-weight:400;color:var(--text-secondary);letter-spacing:4px;margin-bottom:28px}
+.hero-tagline{font-size:16px;color:var(--text-secondary);max-width:600px;margin:0 auto 44px;line-height:1.8;font-weight:300}
+.hero-tagline .typed-text{color:var(--primary);font-weight:500}
+.hero-tagline .cursor{display:inline-block;width:2px;height:18px;background:var(--primary);margin-left:2px;animation:bk .8s step-end infinite;vertical-align:middle}
+@keyframes bk{50%{opacity:0}}
+.hero-cta{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+.btn{font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:2px;padding:15px 36px;border-radius:12px;cursor:pointer;transition:all .5s var(--ease);text-decoration:none;display:inline-flex;align-items:center;gap:10px;position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(179,136,255,0.1));color:var(--primary);border:1px solid rgba(0,229,255,0.2);box-shadow:0 0 30px rgba(0,229,255,0.15)}
+.btn-primary:hover{border-color:rgba(0,229,255,0.5);box-shadow:0 0 50px rgba(0,229,255,0.3);transform:translateY(-3px)}
+.btn-outline{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+.btn-outline:hover{color:var(--primary);border-color:rgba(0,229,255,0.3);background:var(--primary-dim);transform:translateY(-3px)}
+.hero-stats{display:flex;gap:56px;justify-content:center;margin-top:64px;flex-wrap:wrap}
+.stat-item{text-align:center}.stat-number{font-family:var(--font-display);font-size:38px;font-weight:700;background:linear-gradient(135deg,#fff,var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-family:var(--font-heading);font-size:11px;letter-spacing:3px;color:var(--text-muted);margin-top:6px;font-weight:500}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fl 4s ease-in-out infinite}
+.hero-scroll span{font-family:var(--font-heading);font-size:10px;letter-spacing:4px;color:var(--text-muted)}.scroll-line{width:1px;height:36px;background:linear-gradient(transparent,var(--primary),transparent);opacity:.4}
+
+/* ABOUT */
+#about .about-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto}
+.profile-frame{width:280px;height:280px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.profile-frame::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(var(--primary),var(--secondary),var(--rose),var(--primary));animation:spin 8s linear infinite;opacity:.5}
+.profile-frame::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--bg-deep)}
+.profile-inner{width:260px;height:260px;border-radius:50%;z-index:1;overflow:hidden;background:linear-gradient(135deg,rgba(0,229,255,0.06),rgba(179,136,255,0.06))}
+.profile-inner img{width:100%;height:100%;object-fit:cover;object-position:center 20%;border-radius:50%}
+.profile-initials{font-family:var(--font-display);font-size:64px;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.orbit-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,0.03);animation:spin 20s linear infinite}
+.orbit-ring:nth-child(2){width:340px;height:340px;animation-duration:25s;animation-direction:reverse}
+.orbit-ring:nth-child(3){width:400px;height:400px;animation-duration:35s}
+.orbit-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--primary);box-shadow:0 0 10px var(--primary);top:-3px;left:50%}
+.about-content h3{font-family:var(--font-heading);font-size:30px;font-weight:700;margin-bottom:20px;color:#fff}
+.about-content p{color:var(--text-secondary);margin-bottom:18px;font-size:15px;line-height:1.85;font-weight:300}
+.about-highlights{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+.highlight-card{padding:22px;background:var(--bg-glass);border:1px solid var(--border);border-radius:14px;transition:all .5s var(--ease)}
+.highlight-card:hover{border-color:var(--border-hover);box-shadow:var(--glow-cyan);transform:translateY(-4px)}
+.highlight-card .h-icon{margin-bottom:10px}
+.highlight-card .label{font-family:var(--font-heading);font-size:10px;color:var(--text-muted);letter-spacing:3px;font-weight:500;text-transform:uppercase}
+.highlight-card .value{font-family:var(--font-heading);font-size:17px;color:#fff;margin-top:5px;font-weight:600}
+
+/* SKILLS */
+.skills-container{max-width:1100px;margin:0 auto}.skill-category{margin-bottom:56px}
+.skill-category-title{font-family:var(--font-heading);font-size:13px;letter-spacing:4px;text-transform:uppercase;margin-bottom:28px;color:var(--text-muted);display:flex;align-items:center;gap:14px;font-weight:600}
+.skill-category-title .cat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.skill-category-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
+.skill-card{background:var(--bg-glass);border:1px solid var(--border);border-radius:16px;padding:28px 18px;text-align:center;transition:all .5s var(--ease);cursor:default;position:relative;overflow:hidden}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.2),transparent);opacity:0;transition:opacity .4s}
+.skill-card:hover::before{opacity:1}.skill-card:hover{border-color:var(--border-hover);transform:translateY(-6px);box-shadow:var(--glow-cyan)}
+.skill-card .s-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:20px;background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--primary);transition:all .4s}
+.skill-card:hover .s-icon{border-color:rgba(0,229,255,0.2);background:var(--primary-dim);box-shadow:0 0 20px rgba(0,229,255,0.2)}
+.skill-name{font-family:var(--font-heading);font-size:13px;font-weight:600;color:var(--text-primary)}
+.skill-bar-wrap{margin-top:14px;height:3px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden}
+.skill-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--secondary));width:0;transition:width 1.8s var(--ease)}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px;max-width:1300px;margin:0 auto}
+.project-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all .6s var(--ease);position:relative;transform-style:preserve-3d}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);transition:all .4s}
+.project-card:hover::before{background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent)}
+.project-card:hover{border-color:rgba(0,229,255,0.15);box-shadow:0 24px 60px rgba(0,0,0,0.3),var(--glow-cyan)}
+.project-header{padding:30px 30px 0}
+.project-type{font-family:var(--font-heading);font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;border-radius:6px;display:inline-block;margin-bottom:16px;font-weight:600}
+.project-type.sip{color:var(--gold-bright);border:1px solid rgba(230,192,104,0.3);background:rgba(230,192,104,0.08)}
+.project-type.academic{color:var(--secondary);border:1px solid rgba(179,136,255,0.25);background:rgba(179,136,255,0.06)}
+.project-card h3{font-family:var(--font-heading);font-size:19px;font-weight:700;line-height:1.35;margin-bottom:10px;color:#fff}
+.project-card p{font-size:14px;color:var(--text-secondary);line-height:1.7;font-weight:300}
+.project-body{padding:20px 30px}.project-tech{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.tech-tag{font-family:var(--font-heading);font-size:10px;letter-spacing:1px;padding:4px 12px;border-radius:6px;background:rgba(0,229,255,0.04);border:1px solid rgba(0,229,255,0.1);color:rgba(0,229,255,0.8);font-weight:500}
+.project-features{list-style:none;margin-bottom:16px}.project-features li{font-size:13px;color:var(--text-secondary);padding:5px 0 5px 20px;position:relative;line-height:1.65;font-weight:300}
+.project-features li::before{content:'';position:absolute;left:2px;top:12px;width:6px;height:6px;border-radius:50%;border:1.5px solid var(--primary)}
+.project-footer{padding:0 30px 28px;display:flex;gap:10px}
+.project-link{font-family:var(--font-heading);font-size:11px;letter-spacing:1.5px;padding:10px 20px;border-radius:8px;text-decoration:none;transition:all .4s var(--ease);display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.project-link.primary{background:var(--primary-dim);color:var(--primary);border:1px solid rgba(0,229,255,0.12)}
+.project-link.primary:hover{background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.3);transform:translateY(-2px);box-shadow:var(--glow-cyan)}
+
+/* TIMELINE */
+.timeline{max-width:880px;margin:0 auto;position:relative;padding-left:56px}
+.timeline::before{content:'';position:absolute;left:22px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--primary),var(--secondary),rgba(255,255,255,0.03))}
+.timeline-item{position:relative;margin-bottom:44px;opacity:0;transform:translateY(30px);transition:all .7s var(--ease)}.timeline-item.visible{opacity:1;transform:translateY(0)}
+.timeline-dot{position:absolute;left:-40px;top:24px;width:12px;height:12px;border-radius:50%;background:var(--bg-deep);border:2px solid var(--primary);box-shadow:0 0 15px rgba(0,229,255,0.5);z-index:1}
+.timeline-card{background:var(--bg-glass);border:1px solid var(--border);border-radius:16px;padding:30px;transition:all .5s var(--ease)}.timeline-card:hover{border-color:var(--border-hover);box-shadow:var(--glow-cyan)}
+.timeline-date{font-family:var(--font-heading);font-size:11px;letter-spacing:3px;color:var(--primary);margin-bottom:8px;font-weight:600}
+.timeline-card h3{font-family:var(--font-heading);font-size:19px;margin-bottom:4px;color:#fff;font-weight:700}
+.timeline-card h4{font-family:var(--font-heading);font-size:14px;color:var(--secondary);margin-bottom:16px;font-weight:400}
+.timeline-card ul{list-style:none}.timeline-card li{font-size:14px;color:var(--text-secondary);padding:4px 0 4px 20px;position:relative;line-height:1.75;font-weight:300}
+.timeline-card li::before{content:'';position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;border:1.5px solid var(--primary)}
+.timeline-section-title{font-family:var(--font-heading);font-size:20px;margin:64px 0 32px;color:#fff;text-align:center;font-weight:700;display:flex;align-items:center;justify-content:center;gap:14px}
+.timeline-section-title .ts-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+
+/* ACHIEVEMENTS */
+.achievements-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+.achievement-card{background:var(--bg-glass);border:1px solid var(--border);border-radius:18px;padding:32px;transition:all .5s var(--ease)}.achievement-card:hover{transform:translateY(-6px);border-color:rgba(230,192,104,0.2);box-shadow:var(--glow-gold)}
+.achievement-card h3{font-family:var(--font-heading);font-size:17px;margin:18px 0 10px;color:var(--gold);font-weight:700}
+.achievement-card p{font-size:14px;color:var(--text-secondary);line-height:1.75;font-weight:300}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;max-width:1100px;margin:32px auto 0}
+.cert-card{background:var(--bg-glass);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;transition:all .4s var(--ease)}.cert-card:hover{transform:translateY(-3px);border-color:rgba(179,136,255,0.2);box-shadow:var(--glow-purple)}
+.cert-card span{font-family:var(--font-heading);font-size:13px;color:var(--text-primary);font-weight:500}
+.publication-card{background:var(--bg-glass);border:1px solid rgba(230,192,104,0.1);border-radius:18px;padding:32px;max-width:1100px;margin:44px auto 0;transition:all .4s var(--ease)}.publication-card:hover{border-color:rgba(230,192,104,0.25);box-shadow:var(--glow-gold)}
+
+/* RESUME */
+#resume{min-height:auto;padding:100px 80px}.resume-container{max-width:680px;margin:0 auto;text-align:center}
+.resume-preview{background:var(--bg-glass);border:1px solid var(--border);border-radius:24px;padding:56px;position:relative;overflow:hidden}
+.resume-preview::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,0.03),transparent 60%);pointer-events:none}
+.resume-preview h3{font-family:var(--font-heading);font-size:24px;margin:24px 0 10px;color:#fff;font-weight:700}
+.resume-preview p{color:var(--text-secondary);font-size:15px;margin-bottom:32px;font-weight:300}
+.btn-download{font-family:var(--font-heading);font-size:13px;font-weight:600;letter-spacing:2px;padding:16px 42px;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,rgba(0,229,255,0.12),rgba(179,136,255,0.08));color:var(--primary);border:1px solid rgba(0,229,255,0.2);display:inline-flex;align-items:center;gap:10px;transition:all .5s var(--ease);text-decoration:none}
+.btn-download:hover{transform:translateY(-3px);box-shadow:0 0 40px rgba(0,229,255,0.15);border-color:rgba(0,229,255,0.4)}
+.btn-view-resume{font-family:var(--font-heading);font-size:12px;font-weight:500;letter-spacing:2px;padding:12px 28px;border-radius:10px;background:transparent;color:var(--text-secondary);border:1px solid var(--border);display:inline-flex;align-items:center;gap:8px;transition:all .4s var(--ease);text-decoration:none;margin-top:16px}
+.btn-view-resume:hover{color:var(--primary);border-color:rgba(0,229,255,0.2);background:var(--primary-dim);transform:translateY(-2px)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1100px;margin:0 auto}.contact-info{display:flex;flex-direction:column;gap:18px}
+.contact-card{background:var(--bg-glass);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;align-items:center;gap:18px;transition:all .5s var(--ease)}.contact-card:hover{transform:translateX(6px);border-color:var(--border-hover);box-shadow:var(--glow-cyan)}
+.contact-card .info h4{font-family:var(--font-heading);font-size:10px;letter-spacing:3px;color:var(--text-muted);margin-bottom:4px;font-weight:500;text-transform:uppercase}
+.contact-card .info a,.contact-card .info span{font-family:var(--font-heading);font-size:14px;color:var(--text-primary);text-decoration:none;transition:color .3s;font-weight:500}.contact-card .info a:hover{color:var(--primary)}
+.contact-form{background:var(--bg-glass);border:1px solid var(--border);border-radius:20px;padding:36px}
+.form-group{margin-bottom:18px}.form-group label{font-family:var(--font-heading);font-size:10px;letter-spacing:3px;color:var(--text-muted);display:block;margin-bottom:8px;font-weight:500;text-transform:uppercase}
+.form-group input,.form-group textarea{width:100%;padding:14px 18px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font-family:var(--font-body);font-size:14px;transition:all .4s var(--ease);outline:none;font-weight:300}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(0,229,255,0.3);box-shadow:0 0 20px rgba(0,229,255,0.05)}
+.form-group textarea{height:110px;resize:vertical}
+.social-links{display:flex;gap:12px;margin-top:28px}
+.social-link{width:44px;height:44px;border-radius:12px;background:var(--bg-glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--text-secondary);text-decoration:none;transition:all .5s var(--ease)}.social-link:hover{color:var(--primary);border-color:rgba(0,229,255,0.25);background:var(--primary-dim);transform:translateY(-4px);box-shadow:var(--glow-cyan)}
+footer{position:relative;z-index:1;text-align:center;padding:48px 20px;border-top:1px solid var(--border)}footer p{font-family:var(--font-heading);font-size:12px;letter-spacing:2px;color:var(--text-muted)}footer .heart{color:var(--rose)}
+.reveal{opacity:0;transform:translateY(40px);transition:all .9s var(--ease)}.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:all .9s var(--ease)}.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:all .9s var(--ease)}.reveal-right.visible{opacity:1;transform:translateX(0)}
+.stagger-children .reveal{transition-delay:calc(var(--i,0) * 80ms)}
+.parallax-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px);opacity:.5;will-change:transform}
+@media(max-width:1024px){section{padding:100px 36px 70px}#about .about-grid{grid-template-columns:1fr;text-align:center}.contact-grid{grid-template-columns:1fr}.projects-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.nav{padding:14px 20px}.nav-links{position:fixed;top:0;right:-100%;width:72%;height:100vh;background:rgba(6,6,16,0.97);backdrop-filter:blur(30px);flex-direction:column;padding:90px 28px;transition:.5s var(--ease);border-left:1px solid var(--border)}.nav-links.open{right:0}.hamburger{display:flex}section{padding:80px 20px 50px}#hero{padding:0 24px}.hero-stats{gap:28px}.about-highlights{grid-template-columns:1fr}.skills-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.timeline{padding-left:36px}.timeline::before{left:12px}.timeline-dot{left:-30px}.achievements-grid,.cert-grid{grid-template-columns:1fr}.hero-cta{flex-direction:column;align-items:center}.profile-frame{width:200px;height:200px}.profile-inner{width:180px;height:180px}#resume{padding:60px 20px}#scroll-progress-3d,.scene-3d{display:none}}
+</style></head><body>
+<div id="loader"><div class="loader-ring"><div class="loader-core"></div><div class="loader-inner"></div></div><div class="loader-text" id="loader-text">INITIALIZING_CORE...</div><div class="loader-bar"><div class="loader-bar-fill"></div></div></div>
+<div id="shader-bg"><canvas id="shader-canvas"></canvas></div>
+<div class="ambient-grid"></div>
+<div id="scroll-progress-3d"></div>
+<nav class="nav" id="navbar"><div class="nav-logo" onclick="scrollToSection('hero')">SC</div><ul class="nav-links" id="navLinks"><li><a href="#hero" class="active">Home</a></li><li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li><li><a href="#experience">Journey</a></li><li><a href="#achievements">Achievements</a></li><li><a href="#resume">Resume</a></li><li><a href="#contact">Contact</a></li></ul><div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div></nav>
+<section id="hero"><div class="scene-3d" id="hero-3d"></div><div class="hero-content"><div class="hero-badge"><span class="dot"></span>AVAILABLE FOR OPPORTUNITIES</div><h1 class="hero-name"><span class="first">SUJAY</span><span class="last">CHOUKHANDE</span></h1><p class="hero-title">DATA SCIENTIST &bull; AI ENGINEER &bull; ANALYST</p><p class="hero-tagline">Building intelligent systems at the intersection of <span class="typed-text" id="typed"></span><span class="cursor">|</span></p><div class="hero-cta"><a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> EXPLORE PROJECTS</a><a href="https://drive.google.com/file/d/1ZCKIWWx6V7xZp9gSHfDX3mXnzaopj7Yn/view?usp=sharing" target="_blank" class="btn btn-outline"><i class="fas fa-file-alt"></i> VIEW RESUME</a></div><div class="hero-stats"><div class="stat-item"><div class="stat-number" data-target="3">0</div><div class="stat-label">YEARS EXPERIENCE</div></div><div class="stat-item"><div class="stat-number" data-target="7">0</div><div class="stat-label">PROJECTS BUILT</div></div><div class="stat-item"><div class="stat-number" data-target="1">0</div><div class="stat-label">PUBLICATIONS</div></div><div class="stat-item"><div class="stat-number" data-target="4">0</div><div class="stat-label">CERTIFICATIONS</div></div></div></div><div class="hero-scroll"><span>SCROLL DOWN</span><div class="scroll-line"></div></div></section>
+<section id="about"><div class="scene-3d" id="about-3d"></div><div class="section-header reveal"><div class="section-tag">Discover</div><h2 class="section-title">About <span class="gradient">Me</span></h2></div><div class="about-grid"><div class="about-visual reveal-left"><div class="profile-frame"><div class="orbit-ring" style="width:320px;height:320px"><div class="orbit-dot"></div></div><div class="orbit-ring"><div class="orbit-dot" style="background:var(--secondary);box-shadow:0 0 10px var(--secondary)"></div></div><div class="orbit-ring"></div><div class="profile-inner"><img src="https://lh3.googleusercontent.com/d/1g9qHKTFN_n2pRnlZfU3gyTNG7gtoS3uR" alt="Sujay Choukhande" referrerpolicy="no-referrer" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=profile-initials>SC</span>'"></div></div></div><div class="about-content reveal-right"><h3>Turning Data Into Intelligence</h3><p>I'm <strong style="color:var(--primary)">Sujay Choukhande</strong> &mdash; an aspiring Data Scientist and AI Engineer with 3+ years of hands-on experience in data-driven operations, revenue assurance, and smart metering at Adani Electricity Mumbai Limited. Currently pursuing PGDM in AI &amp; Data Science and interning at <strong style="color:var(--secondary)">Adani Medicity &amp; Research Centre</strong> as a Data Scientist Intern.</p><p>I build analytical and LLM-based solutions to solve real-world business and operational problems &mdash; from AI-powered Room Data Sheet generators to smart attendance systems using computer vision.</p><div class="about-highlights"><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm cyan"><i class="fas fa-graduation-cap"></i></div></div><div class="label">EDUCATION</div><div class="value">PGDM AI &amp; DS</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm purple"><i class="fas fa-briefcase"></i></div></div><div class="label">CURRENT ROLE</div><div class="value">Data Scientist Intern</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm rose"><i class="fas fa-map-marker-alt"></i></div></div><div class="label">LOCATION</div><div class="value">Ahmedabad, India</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm gold"><i class="fas fa-bolt"></i></div></div><div class="label">FOCUS</div><div class="value">AI / ML / Analytics</div></div></div></div></div></section>
+<section id="skills"><div class="scene-3d" id="skills-3d"></div><div class="section-header reveal"><div class="section-tag">Arsenal</div><h2 class="section-title">Skills &amp; <span class="gradient">Technologies</span></h2></div><div class="skills-container"><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm cyan"><i class="fas fa-microchip"></i></div>TECHNICAL SKILLS</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-brain"></i></div><div class="skill-name">Machine Learning</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-robot"></i></div><div class="skill-name">Agentic AI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-terminal"></i></div><div class="skill-name">Prompt Engineering</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-chart-line"></i></div><div class="skill-name">Data Analytics</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div></div><div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-eye"></i></div><div class="skill-name">Computer Vision</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div></div><div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-layer-group"></i></div><div class="skill-name">RAG Systems</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div></div></div><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm purple"><i class="fas fa-code"></i></div>PROGRAMMING &amp; DATABASES</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fab fa-python"></i></div><div class="skill-name">Python</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-database"></i></div><div class="skill-name">SQL</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-cube"></i></div><div class="skill-name">NumPy</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-table"></i></div><div class="skill-name">Pandas</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-stream"></i></div><div class="skill-name">Streamlit</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div></div><div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-bolt"></i></div><div class="skill-name">FastAPI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div></div></div></div><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm gold"><i class="fas fa-tools"></i></div>TOOLS &amp; PLATFORMS</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-chart-bar"></i></div><div class="skill-name">Power BI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-file-word"></i></div><div class="skill-name">MS Office</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-industry"></i></div><div class="skill-name">SAP</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fab fa-github"></i></div><div class="skill-name">GitHub</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div><div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-atom"></i></div><div class="skill-name">TensorFlow</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78%"></div></div></div><div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-cloud"></i></div><div class="skill-name">Vercel</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="75%"></div></div></div></div></div><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm rose"><i class="fas fa-star"></i></div>SOFT SKILLS</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-puzzle-piece"></i></div><div class="skill-name">Problem Solving</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-users"></i></div><div class="skill-name">Teamwork</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-crosshairs"></i></div><div class="skill-name">Decision Making</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-comments"></i></div><div class="skill-name">Communication</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div></div></div></div></section>
+<section id="projects"><div class="section-header reveal"><div class="section-tag">Portfolio</div><h2 class="section-title">Featured <span class="gradient">Projects</span></h2></div><div class="projects-grid"><div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type sip">SIP &middot; INTERNSHIP</span><h3>Full Stack AI-Based Room Data Sheet Generator</h3><p>AI-powered platform automating Room Data Sheet generation for hospitals.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">React.js</span><span class="tech-tag">Node.js</span><span class="tech-tag">LLMs</span><span class="tech-tag">Agentic AI</span><span class="tech-tag">Supabase</span><span class="tech-tag">Vercel</span></div><ul class="project-features"><li>Standardizes room-level documentation for finishes, equipment, MEP, HVAC &amp; digital systems</li><li>Reduces manual RDS preparation for large hospital projects</li><li>Bridges coordination gaps between architects, medical planners, MEP &amp; IT teams</li><li>Uses AI, reference templates &amp; predefined planning logic for accuracy</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type sip">SIP &middot; INTERNSHIP</span><h3>AI-Based Smart Attendance System for Medical Colleges</h3><p>Computer vision-powered attendance tracking using facial recognition.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">OpenCV</span><span class="tech-tag">TensorFlow</span><span class="tech-tag">Python</span><span class="tech-tag">Face Recognition</span><span class="tech-tag">Edge AI</span></div><ul class="project-features"><li>Automates attendance using AI-based facial recognition across classrooms &amp; labs</li><li>Eliminates proxy attendance and manual data manipulation</li><li>Real-time monitoring dashboard with faculty login and analytics</li><li>Supports compliance reporting and academic governance</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type sip">SIP &middot; INTERNSHIP</span><h3>Business &amp; Strategic Development for New College</h3><p>Strategic roadmap covering academic vision, approvals &amp; financial planning.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">Market Research</span><span class="tech-tag">Business Strategy</span><span class="tech-tag">Financial Modeling</span><span class="tech-tag">Data Analysis</span></div><ul class="project-features"><li>Identified AI-related academic fields aligned with market demand</li><li>Assessed feasibility, competitor positioning &amp; regional education needs</li><li>Created sustainable CAPEX/OPEX models with revenue projections</li><li>Analyzed multiple college websites for strategic benchmarking</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>AI-Driven Demand Intelligence &amp; Forecast Optimization</h3><p>End-to-end demand forecasting using Python, Streamlit, and agent-based AI.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Streamlit</span><span class="tech-tag">Holt's ES</span><span class="tech-tag">Agent AI</span><span class="tech-tag">Time Series</span></div><ul class="project-features"><li>Monthly time-series forecasting with Holt's Exponential Smoothing</li><li>Rolling anomaly detection for demand pattern irregularities</li><li>Scenario-based forecasts and executive KPIs for planning</li><li>Agent-based AI delivers demand, cost &amp; risk insights</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>AI-Powered HR Intelligence Platform (NL-to-SQL)</h3><p>Natural language to SQL conversion platform with interactive dashboards.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">NL-to-SQL</span><span class="tech-tag">LLM</span><span class="tech-tag">Python</span><span class="tech-tag">Dashboards</span><span class="tech-tag">KPIs</span></div><ul class="project-features"><li>Query databases using natural language instead of manual SQL</li><li>Query validation pipeline with intelligent error handling</li><li>Interactive dashboards for workforce demographics &amp; attrition</li><li>Reduced dependency on analysts for routine HR queries</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>ML-Based Influencer ROI Prediction &amp; Marketing Analytics</h3><p>Profitability-focused influencer marketing analytics with R&sup2; &asymp; 0.87.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">Random Forest</span><span class="tech-tag">Linear Regression</span><span class="tech-tag">EDA</span><span class="tech-tag">Python</span></div><ul class="project-features"><li>EDA on influencer campaigns uncovering ROI drivers</li><li>Engineered ROI by estimating campaign cost and revenue</li><li>R&sup2; &asymp; 0.87 accuracy for ROI prediction models</li><li>Micro-influencers + high engagement = superior ROI</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>RAG-Based Marketing Funnel Analytics System</h3><p>RAG system for user journey &amp; conversion optimization.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">RAG</span><span class="tech-tag">LLM</span><span class="tech-tag">Python</span><span class="tech-tag">Funnel Analytics</span></div><ul class="project-features"><li>Evaluates user journey across multiple funnel stages</li><li>Data-grounded insights using only uploaded funnel data</li><li>Automated stage-wise conversion analysis</li><li>Interactive dashboard for non-technical business users</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+</div></section>
+<section id="experience"><div class="section-header reveal"><div class="section-tag">Journey</div><h2 class="section-title">Experience &amp; <span class="gradient">Education</span></h2></div><h3 class="timeline-section-title reveal"><div class="ts-icon icon-box cyan"><i class="fas fa-briefcase"></i></div> Professional Experience</h3><div class="timeline"><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">2025 &ndash; PRESENT</div><h3>Data Scientist Intern</h3><h4>Adani Medicity &amp; Research Centre, Ahmedabad</h4><ul><li>Building AI-based full-stack platform for automated Room Data Sheet generation</li><li>Developing smart attendance system using computer vision &amp; facial recognition</li><li>Leading business &amp; strategic development research for new college establishment</li><li>Working with LLMs, Agentic AI, React.js, Node.js, and computer vision</li></ul></div></div><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">JUL 2022 &ndash; JUL 2025</div><h3>Assistant Manager</h3><h4>Adani Electricity Mumbai Limited, Mumbai</h4><ul><li>Led end-to-end project management of smart meter integration for 1.2 lakh+ consumers, coordinating cross-functional teams across metering, billing, IT, and field operations</li><li>Performed large-scale data analysis on smart meter and billing datasets using Python, SQL, and Excel to identify abnormal consumption patterns, supporting revenue assurance</li><li>Built automated MIS dashboards and data-driven performance reports with advanced Excel models, delivering actionable business insights to senior leadership</li><li>Conducted EDA and statistical validation on historical consumption data to uncover trends, seasonality, and anomalies</li><li>Drove commercial expansion strategy for new electricity and EV charging connections through customer segmentation and cross-functional collaboration</li><li>Managed relationships with large external stakeholders, enterprise customers, and vendors, handling procurement, contract negotiations, and SLA monitoring</li><li>Oversaw asset management and distribution operations including inventory tracking and vendor performance evaluation</li><li>Contributed to Kaizen and 5S initiatives, driving process standardization and data-backed decision-making</li></ul></div></div><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">JUL 2021 &ndash; AUG 2021</div><h3>Summer Intern</h3><h4>Maharashtra State Electricity Board, Chandrapur</h4><ul><li>Gained exposure to operations of 2920 MW thermal power plant</li><li>Monitored &amp; analyzed boiler and turbine operational parameters</li><li>Assessed performance trends under varying operating conditions</li></ul></div></div></div><h3 class="timeline-section-title reveal"><div class="ts-icon icon-box purple"><i class="fas fa-graduation-cap"></i></div> Education</h3><div class="timeline"><div class="timeline-item"><div class="timeline-dot" style="border-color:var(--secondary);box-shadow:0 0 12px rgba(179,136,255,0.3)"></div><div class="timeline-card"><div class="timeline-date" style="color:var(--secondary)">2025 &ndash; 2027</div><h3>PGDM in AI &amp; Data Science</h3><h4>Adani Institute of Digital Technology Management</h4><ul><li>CGPA: 3.81 / 4.33</li><li>Specialization in AI and Data Science</li><li>Focus on ML, Deep Learning, NLP, and Agentic AI</li></ul></div></div><div class="timeline-item"><div class="timeline-dot" style="border-color:var(--secondary);box-shadow:0 0 12px rgba(179,136,255,0.3)"></div><div class="timeline-card"><div class="timeline-date" style="color:var(--secondary)">2018 &ndash; 2022</div><h3>B.E. &mdash; Electrical Engineering</h3><h4>K.K. Wagh Institute of Engineering Education &amp; Research</h4><ul><li>CGPA: 8.97 / 10.00</li><li>Published international research paper during undergraduate studies</li></ul></div></div></div></section>
+<section id="achievements"><div class="scene-3d" id="achievements-3d"></div><div class="section-header reveal"><div class="section-tag">Recognition</div><h2 class="section-title">Achievements &amp; <span class="gradient">Certifications</span></h2></div><div class="achievements-grid"><div class="achievement-card reveal"><div class="icon-box icon-lg gold"><i class="fas fa-file-alt"></i></div><h3>International Research Publication</h3><p>Published in HBRP Publications on &ldquo;Design and Development of Power Generating Tiles&rdquo; &mdash; prototype demonstration and performance analysis.</p></div><div class="achievement-card reveal"><div class="icon-box icon-lg gold"><i class="fas fa-trophy"></i></div><h3>Top Performer &mdash; Adani Electricity</h3><p>Recognized as Top Performer at Adani Electricity Mumbai Limited for 2 consecutive years.</p></div><div class="achievement-card reveal"><div class="icon-box icon-lg gold"><i class="fas fa-medal"></i></div><h3>SSC Exam Topper</h3><p>Ranked among Top 10 highest-scoring students in SSC Board Examinations.</p></div></div><h3 class="timeline-section-title reveal" style="margin-top:56px"><div class="ts-icon icon-box purple"><i class="fas fa-certificate"></i></div> Certifications</h3><div class="cert-grid"><div class="cert-card reveal"><div class="icon-box icon-sm purple"><i class="fas fa-certificate"></i></div><span>English for Written Communication &mdash; IIT Bombay</span></div><div class="cert-card reveal"><div class="icon-box icon-sm cyan"><i class="fab fa-python"></i></div><span>Python for Data Science &mdash; IBM Developer</span></div><div class="cert-card reveal"><div class="icon-box icon-sm gold"><i class="fas fa-scroll"></i></div><span>Certificate of Publication &mdash; HBRP</span></div><div class="cert-card reveal"><div class="icon-box icon-sm cyan"><i class="fas fa-database"></i></div><span>SQL &amp; Relational Database &mdash; IBM Developer</span></div></div><div class="publication-card reveal" style="margin-top:44px"><div style="display:flex;align-items:center;gap:16px;margin-bottom:14px"><div class="icon-box gold"><i class="fas fa-newspaper"></i></div><h3 style="font-family:var(--font-heading);font-size:18px;color:var(--gold);font-weight:700">Research Publication</h3></div><p style="color:var(--text-secondary);font-size:14px;line-height:1.85;font-weight:300"><strong style="color:var(--text-primary);font-weight:600">Title:</strong> Design and Development of Power Generating Tiles<br><strong style="color:var(--text-primary);font-weight:600">Publisher:</strong> HBRP Publications (International)<br><strong style="color:var(--text-primary);font-weight:600">Highlights:</strong> Prototype demonstration, performance analysis, and energy harvesting from footsteps.</p></div></section>
+<section id="resume"><div class="section-header reveal"><div class="section-tag">Document</div><h2 class="section-title"><span class="gradient">Resume</span></h2></div><div class="resume-container reveal"><div class="resume-preview scanline-effect"><div class="icon-box icon-lg cyan" style="margin:0 auto"><i class="fas fa-file-pdf"></i></div><h3>Sujay Choukhande &mdash; Resume</h3><p>Data Scientist &bull; AI Engineer &bull; Business Analyst<br>3+ Years Experience &bull; PGDM AI &amp; Data Science</p><a href="https://drive.google.com/uc?export=download&id=1ZCKIWWx6V7xZp9gSHfDX3mXnzaopj7Yn" target="_blank" class="btn-download"><i class="fas fa-download"></i> DOWNLOAD RESUME</a><br><a href="https://drive.google.com/file/d/1ZCKIWWx6V7xZp9gSHfDX3mXnzaopj7Yn/view?usp=sharing" target="_blank" class="btn-view-resume"><i class="fas fa-external-link-alt"></i> VIEW IN BROWSER</a></div></div></section>
+<section id="contact"><div class="section-header reveal"><div class="section-tag">Connect</div><h2 class="section-title">Get In <span class="gradient">Touch</span></h2></div><div class="contact-grid"><div class="contact-info reveal-left"><div class="contact-card"><div class="icon-box icon-sm cyan"><i class="fas fa-envelope"></i></div><div class="info"><h4>Email</h4><a href="mailto:sujaychoukhande@gmail.com">sujaychoukhande@gmail.com</a></div></div><div class="contact-card"><div class="icon-box icon-sm purple"><i class="fas fa-phone"></i></div><div class="info"><h4>Phone</h4><span>+91-9404527730</span></div></div><div class="contact-card"><div class="icon-box icon-sm rose"><i class="fas fa-map-marker-alt"></i></div><div class="info"><h4>Location</h4><span>Ahmedabad, India</span></div></div><div class="contact-card"><div class="icon-box icon-sm gold"><i class="fas fa-building"></i></div><div class="info"><h4>Organization</h4><span>Adani Medicity &amp; Research Centre</span></div></div><div class="social-links"><a href="https://www.linkedin.com/in/sujay-choukhande-365734192/" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="https://github.com/sujaychoukhande-06" target="_blank" class="social-link" title="GitHub"><i class="fab fa-github"></i></a><a href="mailto:sujaychoukhande@gmail.com" class="social-link" title="Email"><i class="fas fa-envelope"></i></a><a href="https://drive.google.com/file/d/1ZCKIWWx6V7xZp9gSHfDX3mXnzaopj7Yn/view?usp=sharing" target="_blank" class="social-link" title="Resume"><i class="fas fa-file-alt"></i></a></div></div><div class="contact-form reveal-right glass-panel"><form onsubmit="event.preventDefault();document.querySelector('.form-success').style.display='flex';this.reset();setTimeout(function(){document.querySelector('.form-success').style.display='none'},3000)"><div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" required></div><div class="form-group"><label>Your Email</label><input type="email" placeholder="Enter your email" required></div><div class="form-group"><label>Subject</label><input type="text" placeholder="What is this about?"></div><div class="form-group"><label>Message</label><textarea placeholder="Write your message..."></textarea></div><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-paper-plane"></i> SEND MESSAGE</button><div class="form-success" style="display:none;margin-top:14px;padding:14px;border-radius:10px;background:var(--primary-dim);border:1px solid rgba(0,229,255,0.15);color:var(--primary);font-family:var(--font-heading);font-size:13px;align-items:center;justify-content:center;gap:8px"><i class="fas fa-check-circle"></i> Message received!</div></form></div></div></section>
+<footer><div style="display:flex;justify-content:center;gap:14px;margin-bottom:18px"><a href="https://www.linkedin.com/in/sujay-choukhande-365734192/" target="_blank" class="social-link" style="width:34px;height:34px;font-size:14px"><i class="fab fa-linkedin-in"></i></a><a href="https://github.com/sujaychoukhande-06" target="_blank" class="social-link" style="width:34px;height:34px;font-size:14px"><i class="fab fa-github"></i></a><a href="mailto:sujaychoukhande@gmail.com" class="social-link" style="width:34px;height:34px;font-size:14px"><i class="fas fa-envelope"></i></a></div><p>Designed with <span class="heart">&hearts;</span> by Sujay Choukhande &bull; &copy; 2026</p></footer>
+<script>
+// === TERMINAL LOADING SEQUENCE (from reference) ===
+(function(){
+var lt=document.getElementById('loader-text');
+var phases=['INITIALIZING_CORE','SYNCING_NEURAL_NETS','LOADING_3D_ASSETS','DECRYPTING_ARCHIVES','SYSTEM_ONLINE'];
+var i=0;
+var interval=setInterval(function(){
+i++;
+if(i<phases.length){lt.innerText=phases[i]+'...'}
+else{clearInterval(interval);document.getElementById('loader').classList.add('hidden')}
+},600);
+})();
+
+// === GLSL AURORA SHADER BACKGROUND (from reference) ===
+(function(){
+var canvas=document.getElementById('shader-canvas');
+if(!canvas)return;
+function syncSize(){var w=canvas.clientWidth||1280;var h=canvas.clientHeight||720;if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}}
+if(typeof ResizeObserver!=='undefined')new ResizeObserver(syncSize).observe(canvas);
+syncSize();
+var gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+if(!gl)return;
+var vs='attribute vec2 a_position;varying vec2 v_texCoord;void main(){v_texCoord=a_position*0.5+0.5;gl_Position=vec4(a_position,0.0,1.0);}';
+var fs='precision highp float;uniform float u_time;uniform vec2 u_resolution;varying vec2 v_texCoord;void main(){vec2 uv=v_texCoord;vec2 p=uv*2.0-1.0;p.x*=u_resolution.x/u_resolution.y;float t=u_time*0.2;vec3 color=vec3(0.02,0.02,0.06);for(float i=1.0;i<4.0;i++){p.x+=0.3/i*sin(i*3.0*p.y+t+i*0.5);p.y+=0.3/i*cos(i*3.0*p.x+t+i*0.8);float dist=length(p);float glow=0.02/dist;vec3 accent=mix(vec3(0.0,0.9,1.0),vec3(0.7,0.5,1.0),sin(t)*0.5+0.5);color+=accent*glow*(1.0/i);}float scanline=sin(uv.y*800.0)*0.02;color-=scanline;color*=1.0-length(uv-0.5)*1.2;gl_FragColor=vec4(color,1.0);}';
+function cs(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s}
+var prog=gl.createProgram();gl.attachShader(prog,cs(gl.VERTEX_SHADER,vs));gl.attachShader(prog,cs(gl.FRAGMENT_SHADER,fs));gl.linkProgram(prog);gl.useProgram(prog);
+var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+var pos=gl.getAttribLocation(prog,'a_position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+var uTime=gl.getUniformLocation(prog,'u_time');var uRes=gl.getUniformLocation(prog,'u_resolution');
+function render(t){if(typeof ResizeObserver==='undefined')syncSize();gl.viewport(0,0,canvas.width,canvas.height);if(uTime)gl.uniform1f(uTime,t*0.001);if(uRes)gl.uniform2f(uRes,canvas.width,canvas.height);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);requestAnimationFrame(render)}
+render(0);
+})();
+
+// === ENHANCED THREE.JS HERO (MeshPhong + emissive + pulsing + camera follows cursor) ===
+(function(){
+var c=document.getElementById('hero-3d');if(!c||typeof THREE==='undefined')return;
+var scene=new THREE.Scene();
+var camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+var renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+c.appendChild(renderer.domElement);
+// Core: Emissive icosahedron
+var coreGeom=new THREE.IcosahedronGeometry(2,1);
+var coreMat=new THREE.MeshPhongMaterial({color:0x00e5ff,wireframe:true,transparent:true,opacity:0.12,emissive:0x00e5ff,emissiveIntensity:0.15});
+var core=new THREE.Mesh(coreGeom,coreMat);scene.add(core);
+// Inner metallic sphere
+var innerGeom=new THREE.SphereGeometry(1.2,32,32);
+var innerMat=new THREE.MeshStandardMaterial({color:0x00e5ff,emissive:0x00e5ff,emissiveIntensity:0.15,metalness:0.9,roughness:0.3,transparent:true,opacity:0.2});
+var innerCore=new THREE.Mesh(innerGeom,innerMat);scene.add(innerCore);
+// Outer shell
+var shellGeom=new THREE.IcosahedronGeometry(3.5,0);
+var shellMat=new THREE.MeshBasicMaterial({color:0xb388ff,wireframe:true,transparent:true,opacity:0.1});
+var shell=new THREE.Mesh(shellGeom,shellMat);scene.add(shell);
+// Orbiting ring
+var ringGeom=new THREE.TorusGeometry(4.5,0.02,16,100);
+var ringMat=new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.2});
+var ring=new THREE.Mesh(ringGeom,ringMat);ring.rotation.x=Math.PI/2.5;scene.add(ring);
+// Second ring
+var ringGeom2=new THREE.TorusGeometry(5.2,0.015,16,100);
+var ringMat2=new THREE.MeshBasicMaterial({color:0xb388ff,transparent:true,opacity:0.08});
+var ring2=new THREE.Mesh(ringGeom2,ringMat2);ring2.rotation.x=1;ring2.rotation.z=0.5;scene.add(ring2);
+// Particle field (500 particles)
+var partGeom=new THREE.BufferGeometry();var partCount=500;var posArray=new Float32Array(partCount*3);
+for(var i=0;i<partCount*3;i++)posArray[i]=(Math.random()-0.5)*15;
+partGeom.setAttribute('position',new THREE.BufferAttribute(posArray,3));
+var partMat=new THREE.PointsMaterial({size:0.05,color:0xffffff,transparent:true,opacity:0.5});
+var particles=new THREE.Points(partGeom,partMat);scene.add(particles);
+// Lighting
+scene.add(new THREE.AmbientLight(0xffffff,0.5));
+var pointLight=new THREE.PointLight(0x00e5ff,0.6,50);pointLight.position.set(5,5,5);scene.add(pointLight);
+var pointLight2=new THREE.PointLight(0xb388ff,1,30);pointLight2.position.set(-5,-3,3);scene.add(pointLight2);
+camera.position.z=8;
+var mouseX=0,mouseY=0;
+document.addEventListener('mousemove',function(e){mouseX=(e.clientX/window.innerWidth-0.5)*2;mouseY=(e.clientY/window.innerHeight-0.5)*2});
+function animate(){
+requestAnimationFrame(animate);
+var time=Date.now()*0.001;
+core.rotation.y+=0.005;core.rotation.x+=0.002;
+shell.rotation.y-=0.003;shell.rotation.z+=0.002;
+ring.rotation.z+=0.01;ring2.rotation.z-=0.007;ring2.rotation.x+=0.003;
+particles.rotation.y+=0.001;
+// Camera follows cursor (from reference)
+camera.position.x+=(mouseX*2-camera.position.x)*0.05;
+camera.position.y+=(-mouseY*2-camera.position.y)*0.05;
+camera.lookAt(scene.position);
+// Core pulsing (from reference)
+var s=1.0+Math.sin(time*2.0)*0.05;
+core.scale.set(s,s,s);
+// Scroll-linked
+var sp=window.scrollY/(document.body.scrollHeight-window.innerHeight);
+core.material.opacity=0.3*(1-sp*0.8);
+shell.material.opacity=0.1*(1-sp*0.8);
+innerMat.emissiveIntensity=0.8*(1-sp);
+renderer.render(scene,camera)}
+animate();
+window.addEventListener('resize',function(){camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight)});
+})();
+
+// === NEURAL NETWORK SKILLS SCENE (from reference - enhanced) ===
+(function(){
+var c=document.getElementById('skills-3d');if(!c||typeof THREE==='undefined')return;
+var scene=new THREE.Scene();var camera=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);
+var renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);c.appendChild(renderer.domElement);
+var nodeCount=30;var group=new THREE.Group();scene.add(group);var nodes=[];
+for(var i=0;i<nodeCount;i++){
+var geom=new THREE.SphereGeometry(0.1,12,12);
+var mat=new THREE.MeshBasicMaterial({color:i%2===0?0x00e5ff:0xb388ff});
+var node=new THREE.Mesh(geom,mat);
+node.position.set((Math.random()-0.5)*10,(Math.random()-0.5)*6,(Math.random()-0.5)*5);
+node.userData={velocity:new THREE.Vector3((Math.random()-0.5)*0.01,(Math.random()-0.5)*0.01,(Math.random()-0.5)*0.01)};
+nodes.push(node);group.add(node)}
+camera.position.z=8;
+function animate(){requestAnimationFrame(animate);
+for(var i=0;i<nodes.length;i++){
+nodes[i].position.add(nodes[i].userData.velocity);
+if(Math.abs(nodes[i].position.x)>5)nodes[i].userData.velocity.x*=-1;
+if(Math.abs(nodes[i].position.y)>3)nodes[i].userData.velocity.y*=-1;
+if(Math.abs(nodes[i].position.z)>2.5)nodes[i].userData.velocity.z*=-1}
+var toRemove=[];group.children.forEach(function(ch){if(ch.type==='Line')toRemove.push(ch)});
+toRemove.forEach(function(l){group.remove(l);l.geometry.dispose()});
+for(var a=0;a<nodes.length;a++)for(var b=a+1;b<nodes.length;b++){
+var d=nodes[a].position.distanceTo(nodes[b].position);
+if(d<3){var lg=new THREE.BufferGeometry().setFromPoints([nodes[a].position.clone(),nodes[b].position.clone()]);
+var lm=new THREE.LineBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.1*(1-d/3)});
+group.add(new THREE.Line(lg,lm))}}
+group.rotation.y+=0.002;
+renderer.render(scene,camera)}animate();
+window.addEventListener('resize',function(){camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight)});
+})();
+
+// === ABOUT 3D: Floating rings ===
+(function(){
+var c=document.getElementById('about-3d');if(!c||typeof THREE==='undefined')return;
+var scene=new THREE.Scene();var camera=new THREE.PerspectiveCamera(60,1,0.1,100);
+var renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(500,500);c.style.display='flex';c.style.justifyContent='center';c.style.alignItems='center';
+c.appendChild(renderer.domElement);
+var t1=new THREE.Mesh(new THREE.TorusGeometry(3,0.03,16,100),new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.15}));scene.add(t1);
+var t2=new THREE.Mesh(new THREE.TorusGeometry(3.5,0.02,16,100),new THREE.MeshBasicMaterial({color:0xb388ff,transparent:true,opacity:0.08}));t2.rotation.x=Math.PI/2;scene.add(t2);
+var orb=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.8}));scene.add(orb);
+camera.position.z=6;
+function anim(){requestAnimationFrame(anim);t1.rotation.x+=0.005;t1.rotation.y+=0.008;t2.rotation.y+=0.003;t2.rotation.z+=0.006;var t=Date.now()*0.002;orb.position.set(Math.cos(t)*3,Math.sin(t)*0.5,Math.sin(t)*3);renderer.render(scene,camera)}anim()})();
+
+// === ACHIEVEMENTS 3D: Dodecahedron ===
+(function(){
+var c=document.getElementById('achievements-3d');if(!c||typeof THREE==='undefined')return;
+var scene=new THREE.Scene();var camera=new THREE.PerspectiveCamera(50,window.innerWidth/window.innerHeight,0.1,100);
+var renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);c.appendChild(renderer.domElement);
+var d1=new THREE.Mesh(new THREE.DodecahedronGeometry(2,0),new THREE.MeshBasicMaterial({color:0xe6c068,wireframe:true,transparent:true,opacity:0.06}));scene.add(d1);
+var d2=new THREE.Mesh(new THREE.DodecahedronGeometry(2.5,0),new THREE.MeshBasicMaterial({color:0xb388ff,wireframe:true,transparent:true,opacity:0.03}));scene.add(d2);
+camera.position.z=6;
+function anim(){requestAnimationFrame(anim);d1.rotation.x+=0.003;d1.rotation.y+=0.004;d2.rotation.x-=0.002;d2.rotation.y-=0.003;renderer.render(scene,camera)}anim();
+window.addEventListener('resize',function(){camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight)})})();
+
+// === 3D SCROLL PROGRESS ===
+(function(){
+var el=document.getElementById('scroll-progress-3d');if(!el||typeof THREE==='undefined')return;
+var scene=new THREE.Scene();var camera=new THREE.PerspectiveCamera(50,1,0.1,100);
+var renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(60,60);renderer.setPixelRatio(2);el.appendChild(renderer.domElement);
+var g=new THREE.TorusKnotGeometry(0.6,0.15,80,12,3,5);
+var m=new THREE.MeshBasicMaterial({color:0x00e5ff,wireframe:true,transparent:true,opacity:0.5});
+var knot=new THREE.Mesh(g,m);scene.add(knot);camera.position.z=3;
+function anim(){requestAnimationFrame(anim);var sp=window.scrollY/(document.body.scrollHeight-window.innerHeight);
+knot.rotation.x=sp*Math.PI*6;knot.rotation.y=sp*Math.PI*8;m.opacity=0.2+sp*0.6;renderer.render(scene,camera)}anim()})();
+
+// === TYPING ===
+var phrases=['AI & Machine Learning','Data Science & Analytics','Computer Vision','Healthcare Innovation','Agentic AI Systems','Full-Stack Development'];
+var pi=0,ci=0,del=false;
+function type(){var el=document.getElementById('typed'),cur=phrases[pi];el.textContent=del?cur.substring(0,ci--):cur.substring(0,ci++);var sp=del?25:55;if(!del&&ci===cur.length+1){sp=2200;del=true}if(del&&ci<0){del=false;pi=(pi+1)%phrases.length;sp=500}setTimeout(type,sp)}setTimeout(type,3500);
+
+// === COUNTERS ===
+function counters(){var els=document.querySelectorAll('.stat-number');for(var i=0;i<els.length;i++){(function(el){var t=+el.dataset.target,inc=t/70,c=0;function up(){c+=inc;if(c<t){el.textContent=Math.ceil(c);requestAnimationFrame(up)}else el.textContent=t+'+'}up()})(els[i])}}setTimeout(counters,3800);
+
+// === NAV ===
+var nav=document.getElementById('navbar');
+addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>60);var cur='';var secs=document.querySelectorAll('section');for(var i=0;i<secs.length;i++){if(scrollY>=secs[i].offsetTop-220)cur=secs[i].id}var links=document.querySelectorAll('.nav-links a');for(var j=0;j<links.length;j++){links[j].classList.toggle('active',links[j].getAttribute('href')==='#'+cur)}});
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');document.getElementById('hamburger').classList.toggle('active')}
+var navAs=document.querySelectorAll('.nav-links a');for(var i=0;i<navAs.length;i++){navAs[i].addEventListener('click',function(){document.getElementById('navLinks').classList.remove('open');document.getElementById('hamburger').classList.remove('active')})}
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+
+// === SCROLL REVEAL ===
+var obs=new IntersectionObserver(function(en){for(var i=0;i<en.length;i++){if(en[i].isIntersecting)en[i].target.classList.add('visible')}},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+var revEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.timeline-item');for(var i=0;i<revEls.length;i++)obs.observe(revEls[i]);
+
+// === SKILL BARS ===
+var sobs=new IntersectionObserver(function(en){for(var i=0;i<en.length;i++){if(en[i].isIntersecting){var bars=en[i].target.querySelectorAll('.skill-bar');for(var j=0;j<bars.length;j++)bars[j].style.width=bars[j].dataset.width}}},{threshold:0.25});
+var cats=document.querySelectorAll('.skill-category');for(var i=0;i<cats.length;i++)sobs.observe(cats[i]);
+
+// === 3D CARD TILT + GLASS REFLECTION ===
+var cards=document.querySelectorAll('.project-card');
+for(var i=0;i<cards.length;i++){(function(card){
+card.addEventListener('mousemove',function(e){var r=card.getBoundingClientRect();var x=(e.clientX-r.left)/r.width-0.5;var y=(e.clientY-r.top)/r.height-0.5;card.style.transform='translateY(-8px) rotateY('+x*10+'deg) rotateX('+(-y*10)+'deg)';card.style.transition='transform .1s'});
+card.addEventListener('mouseleave',function(){card.style.transform='';card.style.transition='all .6s cubic-bezier(0.16,1,0.3,1)'})})(cards[i])}
+
+// === MAGNETIC BUTTONS (from reference) ===
+var btns=document.querySelectorAll('.btn,.btn-download,.project-link,.social-link');
+for(var i=0;i<btns.length;i++){(function(btn){
+btn.addEventListener('mousemove',function(e){var r=btn.getBoundingClientRect();var x=e.clientX-r.left-r.width/2;var y=e.clientY-r.top-r.height/2;btn.style.transform='translate('+x*0.2+'px,'+y*0.2+'px)'});
+btn.addEventListener('mouseleave',function(){btn.style.transform='translate(0px,0px)'})})(btns[i])}
+</script>
+</body></html>
