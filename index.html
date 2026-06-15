@@ -106,7 +106,7 @@ section{position:relative;z-index:1;min-height:100vh;padding:140px 80px 100px}
 .profile-frame::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(var(--primary),var(--secondary),var(--rose),var(--primary));animation:spin 8s linear infinite;opacity:.5}
 .profile-frame::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--bg-deep)}
 .profile-inner{width:260px;height:260px;border-radius:50%;z-index:1;overflow:hidden;background:linear-gradient(135deg,rgba(0,229,255,0.06),rgba(179,136,255,0.06))}
-.profile-inner img{width:100%;height:100%;object-fit:cover;object-position:center 20%;border-radius:50%}
+.profile-inner img{width:100%;height:100%;object-fit:cover;object-position:center 10%;border-radius:50%}
 .profile-initials{font-family:var(--font-display);font-size:64px;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
 .orbit-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,0.03);animation:spin 20s linear infinite}
 .orbit-ring:nth-child(2){width:340px;height:340px;animation-duration:25s;animation-direction:reverse}
@@ -219,19 +219,262 @@ footer{position:relative;z-index:1;text-align:center;padding:48px 20px;border-to
 <div id="scroll-progress-3d"></div>
 <nav class="nav" id="navbar"><div class="nav-logo" onclick="scrollToSection('hero')">SC</div><ul class="nav-links" id="navLinks"><li><a href="#hero" class="active">Home</a></li><li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li><li><a href="#experience">Journey</a></li><li><a href="#achievements">Achievements</a></li><li><a href="#resume">Resume</a></li><li><a href="#contact">Contact</a></li></ul><div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div></nav>
 <section id="hero"><div class="scene-3d" id="hero-3d"></div><div class="hero-content"><div class="hero-badge"><span class="dot"></span>AVAILABLE FOR OPPORTUNITIES</div><h1 class="hero-name"><span class="first">SUJAY</span><span class="last">CHOUKHANDE</span></h1><p class="hero-title">DATA SCIENTIST &bull; AI ENGINEER &bull; ANALYST</p><p class="hero-tagline">Building intelligent systems at the intersection of <span class="typed-text" id="typed"></span><span class="cursor">|</span></p><div class="hero-cta"><a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> EXPLORE PROJECTS</a><a href="https://drive.google.com/file/d/1VP0rY8vYJsiJZJMWt2J6DXD2imRe0cod/view?usp=sharing" target="_blank" class="btn btn-outline"><i class="fas fa-file-alt"></i> VIEW RESUME</a></div><div class="hero-stats"><div class="stat-item"><div class="stat-number" data-target="3">0</div><div class="stat-label">YEARS EXPERIENCE</div></div><div class="stat-item"><div class="stat-number" data-target="7">0</div><div class="stat-label">PROJECTS BUILT</div></div><div class="stat-item"><div class="stat-number" data-target="1">0</div><div class="stat-label">PUBLICATIONS</div></div><div class="stat-item"><div class="stat-number" data-target="4">0</div><div class="stat-label">CERTIFICATIONS</div></div></div></div><div class="hero-scroll"><span>SCROLL DOWN</span><div class="scroll-line"></div></div></section>
-<section id="about"><div class="scene-3d" id="about-3d"></div><div class="section-header reveal"><div class="section-tag">Discover</div><h2 class="section-title">About <span class="gradient">Me</span></h2></div><div class="about-grid"><div class="about-visual reveal-left"><div class="profile-frame"><div class="orbit-ring" style="width:320px;height:320px"><div class="orbit-dot"></div></div><div class="orbit-ring"><div class="orbit-dot" style="background:var(--secondary);box-shadow:0 0 10px var(--secondary)"></div></div><div class="orbit-ring"></div><div class="profile-inner"><img src="https://lh3.googleusercontent.com/d/1g9qHKTFN_n2pRnlZfU3gyTNG7gtoS3uR" alt="Sujay Choukhande" referrerpolicy="no-referrer" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=profile-initials>SC</span>'"></div></div></div><div class="about-content reveal-right"><h3>Turning Data Into Intelligence</h3><p>I'm <strong style="color:var(--primary)">Sujay Choukhande</strong> &mdash; an aspiring Data Scientist and AI Engineer with 3+ years of hands-on experience in data-driven operations, revenue assurance, and smart metering at Adani Electricity Mumbai Limited. Currently pursuing PGDM in AI &amp; Data Science and interning at <strong style="color:var(--secondary)">Adani Medicity &amp; Research Centre</strong> as a Data Scientist Intern.</p><p>I build analytical and LLM-based solutions to solve real-world business and operational problems &mdash; from AI-powered Room Data Sheet generators to smart attendance systems using computer vision.</p><div class="about-highlights"><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm cyan"><i class="fas fa-graduation-cap"></i></div></div><div class="label">EDUCATION</div><div class="value">PGDM AI &amp; DS</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm purple"><i class="fas fa-briefcase"></i></div></div><div class="label">CURRENT ROLE</div><div class="value">Data Scientist Intern</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm rose"><i class="fas fa-map-marker-alt"></i></div></div><div class="label">LOCATION</div><div class="value">Ahmedabad, India</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm gold"><i class="fas fa-bolt"></i></div></div><div class="label">FOCUS</div><div class="value">AI / ML / Analytics</div></div></div></div></div></section>
-<section id="skills"><div class="scene-3d" id="skills-3d"></div><div class="section-header reveal"><div class="section-tag">Arsenal</div><h2 class="section-title">Skills &amp; <span class="gradient">Technologies</span></h2></div><div class="skills-container"><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm cyan"><i class="fas fa-microchip"></i></div>TECHNICAL SKILLS</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-brain"></i></div><div class="skill-name">Machine Learning</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-robot"></i></div><div class="skill-name">Agentic AI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-terminal"></i></div><div class="skill-name">Prompt Engineering</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-chart-line"></i></div><div class="skill-name">Data Analytics</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div></div><div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-eye"></i></div><div class="skill-name">Computer Vision</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div></div><div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-layer-group"></i></div><div class="skill-name">RAG Systems</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div></div></div><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm purple"><i class="fas fa-code"></i></div>PROGRAMMING &amp; DATABASES</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fab fa-python"></i></div><div class="skill-name">Python</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-database"></i></div><div class="skill-name">SQL</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-cube"></i></div><div class="skill-name">NumPy</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-table"></i></div><div class="skill-name">Pandas</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-stream"></i></div><div class="skill-name">Streamlit</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div></div><div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-bolt"></i></div><div class="skill-name">FastAPI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div></div></div></div><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm gold"><i class="fas fa-tools"></i></div>TOOLS &amp; PLATFORMS</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-chart-bar"></i></div><div class="skill-name">Power BI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-file-word"></i></div><div class="skill-name">MS Office</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-industry"></i></div><div class="skill-name">SAP</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fab fa-github"></i></div><div class="skill-name">GitHub</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div><div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-atom"></i></div><div class="skill-name">TensorFlow</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78%"></div></div></div><div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-cloud"></i></div><div class="skill-name">Vercel</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="75%"></div></div></div></div></div><div class="skill-category reveal"><div class="skill-category-title"><div class="cat-icon icon-box icon-sm rose"><i class="fas fa-star"></i></div>SOFT SKILLS</div><div class="skills-grid stagger-children"><div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-puzzle-piece"></i></div><div class="skill-name">Problem Solving</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div></div><div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-users"></i></div><div class="skill-name">Teamwork</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div><div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-crosshairs"></i></div><div class="skill-name">Decision Making</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div><div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-comments"></i></div><div class="skill-name">Communication</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div></div></div></div></section>
-<section id="projects"><div class="section-header reveal"><div class="section-tag">Portfolio</div><h2 class="section-title">Featured <span class="gradient">Projects</span></h2></div><div class="projects-grid"><div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type sip">SIP &middot; INTERNSHIP</span><h3>Full Stack AI-Based Room Data Sheet Generator</h3><p>AI-powered platform automating Room Data Sheet generation for hospitals.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">React.js</span><span class="tech-tag">Node.js</span><span class="tech-tag">LLMs</span><span class="tech-tag">Agentic AI</span><span class="tech-tag">Supabase</span><span class="tech-tag">Vercel</span></div><ul class="project-features"><li>Standardizes room-level documentation for finishes, equipment, MEP, HVAC &amp; digital systems</li><li>Reduces manual RDS preparation for large hospital projects</li><li>Bridges coordination gaps between architects, medical planners, MEP &amp; IT teams</li><li>Uses AI, reference templates &amp; predefined planning logic for accuracy</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
-<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type sip">SIP &middot; INTERNSHIP</span><h3>AI-Based Smart Attendance System for Medical Colleges</h3><p>Computer vision-powered attendance tracking using facial recognition.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">OpenCV</span><span class="tech-tag">TensorFlow</span><span class="tech-tag">Python</span><span class="tech-tag">Face Recognition</span><span class="tech-tag">Edge AI</span></div><ul class="project-features"><li>Automates attendance using AI-based facial recognition across classrooms &amp; labs</li><li>Eliminates proxy attendance and manual data manipulation</li><li>Real-time monitoring dashboard with faculty login and analytics</li><li>Supports compliance reporting and academic governance</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
-<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type sip">SIP &middot; INTERNSHIP</span><h3>Business &amp; Strategic Development for New College</h3><p>Strategic roadmap covering academic vision, approvals &amp; financial planning.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">Market Research</span><span class="tech-tag">Business Strategy</span><span class="tech-tag">Financial Modeling</span><span class="tech-tag">Data Analysis</span></div><ul class="project-features"><li>Identified AI-related academic fields aligned with market demand</li><li>Assessed feasibility, competitor positioning &amp; regional education needs</li><li>Created sustainable CAPEX/OPEX models with revenue projections</li><li>Analyzed multiple college websites for strategic benchmarking</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
-<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>AI-Driven Demand Intelligence &amp; Forecast Optimization</h3><p>End-to-end demand forecasting using Python, Streamlit, and agent-based AI.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Streamlit</span><span class="tech-tag">Holt's ES</span><span class="tech-tag">Agent AI</span><span class="tech-tag">Time Series</span></div><ul class="project-features"><li>Monthly time-series forecasting with Holt's Exponential Smoothing</li><li>Rolling anomaly detection for demand pattern irregularities</li><li>Scenario-based forecasts and executive KPIs for planning</li><li>Agent-based AI delivers demand, cost &amp; risk insights</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
-<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>AI-Powered HR Intelligence Platform (NL-to-SQL)</h3><p>Natural language to SQL conversion platform with interactive dashboards.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">NL-to-SQL</span><span class="tech-tag">LLM</span><span class="tech-tag">Python</span><span class="tech-tag">Dashboards</span><span class="tech-tag">KPIs</span></div><ul class="project-features"><li>Query databases using natural language instead of manual SQL</li><li>Query validation pipeline with intelligent error handling</li><li>Interactive dashboards for workforce demographics &amp; attrition</li><li>Reduced dependency on analysts for routine HR queries</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
-<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>ML-Based Influencer ROI Prediction &amp; Marketing Analytics</h3><p>Profitability-focused influencer marketing analytics with R&sup2; &asymp; 0.87.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">Random Forest</span><span class="tech-tag">Linear Regression</span><span class="tech-tag">EDA</span><span class="tech-tag">Python</span></div><ul class="project-features"><li>EDA on influencer campaigns uncovering ROI drivers</li><li>Engineered ROI by estimating campaign cost and revenue</li><li>R&sup2; &asymp; 0.87 accuracy for ROI prediction models</li><li>Micro-influencers + high engagement = superior ROI</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
-<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div><div class="project-header"><span class="project-type academic">ACADEMIC</span><h3>RAG-Based Marketing Funnel Analytics System</h3><p>RAG system for user journey &amp; conversion optimization.</p></div><div class="project-body"><div class="project-tech"><span class="tech-tag">RAG</span><span class="tech-tag">LLM</span><span class="tech-tag">Python</span><span class="tech-tag">Funnel Analytics</span></div><ul class="project-features"><li>Evaluates user journey across multiple funnel stages</li><li>Data-grounded insights using only uploaded funnel data</li><li>Automated stage-wise conversion analysis</li><li>Interactive dashboard for non-technical business users</li></ul></div><div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div></div>
+<section id="about"><div class="scene-3d" id="about-3d"></div><div class="section-header reveal"><div class="section-tag">Discover</div><h2 class="section-title">About <span class="gradient">Me</span></h2></div><div class="about-grid"><div class="about-visual reveal-left"><div class="profile-frame"><div class="orbit-ring" style="width:320px;height:320px"><div class="orbit-dot"></div></div><div class="orbit-ring"><div class="orbit-dot" style="background:var(--secondary);box-shadow:0 0 10px var(--secondary)"></div></div><div class="orbit-ring"></div><div class="profile-inner"><img src="https://lh3.googleusercontent.com/d/1g9qHKTFN_n2pRnlZfU3gyTNG7gtoS3uR" alt="Sujay Choukhande" referrerpolicy="no-referrer" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=profile-initials>SC</span>'"></div></div></div><div class="about-content reveal-right"><h3>Turning Data Into Intelligence</h3><p>I'm <strong style="color:var(--primary)">Sujay Choukhande</strong> &mdash; an aspiring Data Scientist and AI Application Developer with 3+ years of experience in data-driven operations, revenue assurance, and smart metering at a large-scale power utility. Hands-on expertise in AI application development, computer vision, LLM integration, and business intelligence. Currently pursuing PGDM in AI &amp; Data Science and interning at <strong style="color:var(--secondary)">Adani Medicity &amp; Research Centre</strong> as a Data Science &amp; AI Intern.</p><p>I build AI-powered full-stack applications and LLM-based solutions to solve real-world business and operational problems &mdash; from intelligent Room Data Sheet platforms to computer vision attendance systems and RAG-based analytics tools. Proficient in Python, SQL, OpenCV, Streamlit, and cloud deployment.</p><div class="about-highlights"><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm cyan"><i class="fas fa-graduation-cap"></i></div></div><div class="label">EDUCATION</div><div class="value">PGDM AI &amp; DS</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm purple"><i class="fas fa-briefcase"></i></div></div><div class="label">CURRENT ROLE</div><div class="value">Data Science &amp; AI Intern</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm rose"><i class="fas fa-map-marker-alt"></i></div></div><div class="label">LOCATION</div><div class="value">Ahmedabad, India</div></div><div class="highlight-card"><div class="h-icon"><div class="icon-box icon-sm gold"><i class="fas fa-bolt"></i></div></div><div class="label">FOCUS</div><div class="value">AI / ML / Analytics</div></div></div></div></div></section>
+<section id="skills"><div class="scene-3d" id="skills-3d"></div>
+<div class="section-header reveal"><div class="section-tag">Arsenal</div><h2 class="section-title">Skills &amp; <span class="gradient">Technologies</span></h2></div>
+<div class="skills-container">
+
+<div class="skill-category reveal">
+<div class="skill-category-title"><div class="cat-icon icon-box icon-sm cyan"><i class="fas fa-microchip"></i></div>AI &amp; MACHINE LEARNING</div>
+<div class="skills-grid stagger-children">
+<div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-brain"></i></div><div class="skill-name">Machine Learning</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div>
+<div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-eye"></i></div><div class="skill-name">Computer Vision</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div></div>
+<div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-plug"></i></div><div class="skill-name">LLM Integration</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div>
+<div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-terminal"></i></div><div class="skill-name">Prompt Engineering</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div>
+<div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-robot"></i></div><div class="skill-name">Agentic AI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div></div>
+<div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-layer-group"></i></div><div class="skill-name">RAG Systems</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div>
+</div></div>
+
+<div class="skill-category reveal">
+<div class="skill-category-title"><div class="cat-icon icon-box icon-sm purple"><i class="fas fa-code"></i></div>PROGRAMMING &amp; FRAMEWORKS</div>
+<div class="skills-grid stagger-children">
+<div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fab fa-python"></i></div><div class="skill-name">Python</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div>
+<div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fab fa-js-square"></i></div><div class="skill-name">JavaScript</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div>
+<div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-database"></i></div><div class="skill-name">SQL</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div>
+<div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-stream"></i></div><div class="skill-name">Streamlit</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="85%"></div></div></div>
+<div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-bolt"></i></div><div class="skill-name">FastAPI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div></div>
+<div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fas fa-link"></i></div><div class="skill-name">LangChain</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80%"></div></div></div>
+</div></div>
+
+<div class="skill-category reveal">
+<div class="skill-category-title"><div class="cat-icon icon-box icon-sm gold"><i class="fas fa-tools"></i></div>TOOLS, PLATFORMS &amp; CLOUD</div>
+<div class="skills-grid stagger-children">
+<div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-chart-bar"></i></div><div class="skill-name">Power BI</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div>
+<div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fab fa-github"></i></div><div class="skill-name">Git / GitHub</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div>
+<div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-cloud"></i></div><div class="skill-name">Vercel</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78%"></div></div></div>
+<div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-server"></i></div><div class="skill-name">Supabase</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="82%"></div></div></div>
+<div class="skill-card reveal" style="--i:4"><div class="s-icon"><i class="fas fa-rocket"></i></div><div class="skill-name">Render</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="75%"></div></div></div>
+<div class="skill-card reveal" style="--i:5"><div class="s-icon"><i class="fab fa-aws"></i></div><div class="skill-name">AWS</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="72%"></div></div></div>
+</div></div>
+
+<div class="skill-category reveal">
+<div class="skill-category-title"><div class="cat-icon icon-box icon-sm rose"><i class="fas fa-star"></i></div>SOFT SKILLS</div>
+<div class="skills-grid stagger-children">
+<div class="skill-card reveal" style="--i:0"><div class="s-icon"><i class="fas fa-puzzle-piece"></i></div><div class="skill-name">Problem Solving</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="95%"></div></div></div>
+<div class="skill-card reveal" style="--i:1"><div class="s-icon"><i class="fas fa-users"></i></div><div class="skill-name">Teamwork</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92%"></div></div></div>
+<div class="skill-card reveal" style="--i:2"><div class="s-icon"><i class="fas fa-crosshairs"></i></div><div class="skill-name">Decision Making</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90%"></div></div></div>
+<div class="skill-card reveal" style="--i:3"><div class="s-icon"><i class="fas fa-comments"></i></div><div class="skill-name">Communication</div><div class="skill-bar-wrap"><div class="skill-bar" data-width="88%"></div></div></div>
+</div></div>
+
 </div></section>
-<section id="experience"><div class="section-header reveal"><div class="section-tag">Journey</div><h2 class="section-title">Experience &amp; <span class="gradient">Education</span></h2></div><h3 class="timeline-section-title reveal"><div class="ts-icon icon-box cyan"><i class="fas fa-briefcase"></i></div> Professional Experience</h3><div class="timeline"><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">2025 &ndash; PRESENT</div><h3>Data Scientist Intern</h3><h4>Adani Medicity &amp; Research Centre, Ahmedabad</h4><ul><li>Building AI-based full-stack platform for automated Room Data Sheet generation</li><li>Developing smart attendance system using computer vision &amp; facial recognition</li><li>Leading business &amp; strategic development research for new college establishment</li><li>Working with LLMs, Agentic AI, React.js, Node.js, and computer vision</li></ul></div></div><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">JUL 2022 &ndash; JUL 2025</div><h3>Assistant Manager</h3><h4>Adani Electricity Mumbai Limited, Mumbai</h4><ul><li>Led end-to-end project management of smart meter integration for 1.2 lakh+ consumers, coordinating cross-functional teams across metering, billing, IT, and field operations</li><li>Performed large-scale data analysis on smart meter and billing datasets using Python, SQL, and Excel to identify abnormal consumption patterns, supporting revenue assurance</li><li>Built automated MIS dashboards and data-driven performance reports with advanced Excel models, delivering actionable business insights to senior leadership</li><li>Conducted EDA and statistical validation on historical consumption data to uncover trends, seasonality, and anomalies</li><li>Drove commercial expansion strategy for new electricity and EV charging connections through customer segmentation and cross-functional collaboration</li><li>Managed relationships with large external stakeholders, enterprise customers, and vendors, handling procurement, contract negotiations, and SLA monitoring</li><li>Oversaw asset management and distribution operations including inventory tracking and vendor performance evaluation</li><li>Contributed to Kaizen and 5S initiatives, driving process standardization and data-backed decision-making</li></ul></div></div><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-date">JUL 2021 &ndash; AUG 2021</div><h3>Summer Intern</h3><h4>Maharashtra State Electricity Board, Chandrapur</h4><ul><li>Gained exposure to operations of 2920 MW thermal power plant</li><li>Monitored &amp; analyzed boiler and turbine operational parameters</li><li>Assessed performance trends under varying operating conditions</li></ul></div></div></div><h3 class="timeline-section-title reveal"><div class="ts-icon icon-box purple"><i class="fas fa-graduation-cap"></i></div> Education</h3><div class="timeline"><div class="timeline-item"><div class="timeline-dot" style="border-color:var(--secondary);box-shadow:0 0 12px rgba(179,136,255,0.3)"></div><div class="timeline-card"><div class="timeline-date" style="color:var(--secondary)">2025 &ndash; 2027</div><h3>PGDM in AI &amp; Data Science</h3><h4>Adani Institute of Digital Technology Management</h4><ul><li>CGPA: 3.81 / 4.33</li><li>Specialization in AI and Data Science</li><li>Focus on ML, Deep Learning, NLP, and Agentic AI</li></ul></div></div><div class="timeline-item"><div class="timeline-dot" style="border-color:var(--secondary);box-shadow:0 0 12px rgba(179,136,255,0.3)"></div><div class="timeline-card"><div class="timeline-date" style="color:var(--secondary)">2018 &ndash; 2022</div><h3>B.E. &mdash; Electrical Engineering</h3><h4>K.K. Wagh Institute of Engineering Education &amp; Research</h4><ul><li>CGPA: 8.97 / 10.00</li><li>Published international research paper during undergraduate studies</li></ul></div></div></div></section>
+<section id="projects"><div class="section-header reveal"><div class="section-tag">Portfolio</div><h2 class="section-title">Featured <span class="gradient">Projects</span></h2></div>
+<div class="projects-grid">
+
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div>
+<div class="project-header">
+<span class="project-type sip">SIP &middot; INTERNSHIP</span>
+<h3>AI-Integrated Room Data Sheet (RDS) Platform</h3>
+<p>Full-stack AI-powered platform for hospital Room Data Sheet management, digitizing 280+ fields across 13 clinical sections.</p>
+</div>
+<div class="project-body">
+<div class="project-tech">
+<span class="tech-tag">Node.js</span><span class="tech-tag">Express.js</span><span class="tech-tag">Supabase</span><span class="tech-tag">Groq LLM</span><span class="tech-tag">Agentic AI</span><span class="tech-tag">Tavily</span><span class="tech-tag">PDFKit</span><span class="tech-tag">Vercel</span><span class="tech-tag">Render</span>
+</div>
+<ul class="project-features">
+<li>Built backend with Node.js, Express.js &amp; Supabase (PostgreSQL) with RESTful APIs, role-based auth for 22+ users, audit logging &amp; cloud storage</li>
+<li>Engineered AI-powered content extraction engine using Groq LLM with spatial-aware text parsing &mdash; reducing manual data entry by ~70%</li>
+<li>Architected 13 specialized AI validation agents with domain-specific prompts &amp; Tavily web search to validate against NABH, JCI, ASHRAE, WHO standards</li>
+<li>Built enterprise-grade PDF export engine using PDFKit with hero cards, criticality badges, medical gas tables &amp; AI validation notes</li>
+</ul>
+</div>
+<div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div>
+</div>
+
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div>
+<div class="project-header">
+<span class="project-type sip">SIP &middot; INTERNSHIP</span>
+<h3>Smart Attendance System &mdash; Computer Vision &amp; Analytics</h3>
+<p>End-to-end computer vision system automating student attendance from lecture videos and live camera/RTSP feeds.</p>
+</div>
+<div class="project-body">
+<div class="project-tech">
+<span class="tech-tag">OpenCV</span><span class="tech-tag">YuNet (ONNX)</span><span class="tech-tag">dlib</span><span class="tech-tag">LBPH</span><span class="tech-tag">Streamlit</span><span class="tech-tag">Plotly</span><span class="tech-tag">Python</span>
+</div>
+<ul class="project-features">
+<li>Implemented high-recall face detection using OpenCV&rsquo;s YuNet deep-learning detector (ONNX) with built-in NMS and dual-mode recognition engine (LBPH &amp; dlib 128D embeddings)</li>
+<li>Engineered multi-frame confirmation tracker using IoU-based spatial matching &amp; temporal vote accumulation &mdash; eliminating false positives</li>
+<li>Built analytics dashboard with 5 tabs &mdash; animated KPI cards, attendance gauge, trend charts with 7-day forecast, weekly heatmaps &amp; risk alerts</li>
+<li>Supports CSV/Excel export, leaderboard rankings, and compliance reporting for academic governance</li>
+</ul>
+</div>
+<div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div>
+</div>
+
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div>
+<div class="project-header">
+<span class="project-type sip">SIP &middot; INTERNSHIP</span>
+<h3>Business Design &amp; Development &mdash; AI &amp; Data Sciences Institute</h3>
+<p>Comprehensive 27-page institutional business proposal for establishing an AI &amp; Data Sciences Institute.</p>
+</div>
+<div class="project-body">
+<div class="project-tech">
+<span class="tech-tag">Market Research</span><span class="tech-tag">Business Strategy</span><span class="tech-tag">Financial Modeling</span><span class="tech-tag">Data Analysis</span><span class="tech-tag">Academic Planning</span>
+</div>
+<ul class="project-features">
+<li>Designed three-layer academic architecture with 2 programs across 5 industry specialization tracks (Healthcare, FinTech, Manufacturing, Energy, Business Analytics)</li>
+<li>Developed financial model projecting &#x20B9;11.76 Cr investment with 3-year revenue forecast (Year 1: &#x20B9;3.53 Cr &rarr; Year 3: &#x20B9;21.00 Cr / &#x20B9;9.24 Cr EBITDA)</li>
+<li>Planned campus infrastructure (35,000&ndash;45,000 sq ft, GPU compute lab) with corporate partnership strategy covering 100+ target employers</li>
+<li>Conducted competitor positioning, regional education needs assessment &amp; employer ecosystem mapping</li>
+</ul>
+</div>
+<div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div>
+</div>
+
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div>
+<div class="project-header">
+<span class="project-type academic">ACADEMIC</span>
+<h3>AI-Driven Demand Intelligence &amp; Forecast Optimization</h3>
+<p>End-to-end demand forecasting application with agent-based AI framework for executive-level insights.</p>
+</div>
+<div class="project-body">
+<div class="project-tech">
+<span class="tech-tag">Python</span><span class="tech-tag">Streamlit</span><span class="tech-tag">Holt&rsquo;s ES</span><span class="tech-tag">Agent AI</span><span class="tech-tag">Time Series</span>
+</div>
+<ul class="project-features">
+<li>Built time-series forecasting with Holt&rsquo;s Exponential Smoothing, rolling anomaly detection &amp; scenario-based what-if simulations</li>
+<li>Developed agent-based AI framework that auto-generates executive-level insights, trend narratives &amp; strategic recommendations</li>
+<li>Delivered interactive dashboards with dynamic KPIs, confidence intervals &amp; exportable forecast reports</li>
+<li>Scenario-based forecasts enabling business stakeholders to evaluate demand under multiple conditions</li>
+</ul>
+</div>
+<div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div>
+</div>
+
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div>
+<div class="project-header">
+<span class="project-type academic">ACADEMIC</span>
+<h3>AI-Powered HR Intelligence Platform (NL-to-SQL)</h3>
+<p>LLM-based text-to-SQL pipeline enabling non-technical HR teams to query workforce data conversationally.</p>
+</div>
+<div class="project-body">
+<div class="project-tech">
+<span class="tech-tag">NL-to-SQL</span><span class="tech-tag">LLM</span><span class="tech-tag">Python</span><span class="tech-tag">Dashboards</span><span class="tech-tag">KPIs</span>
+</div>
+<ul class="project-features">
+<li>Converts natural language queries into SQL using an LLM-based text-to-SQL pipeline for conversational data access</li>
+<li>Built interactive dashboards for workforce demographics, attrition analysis, performance tracking &amp; diversity metrics</li>
+<li>Query validation pipeline with intelligent error handling and fallback mechanisms</li>
+<li>Reduced dependency on data analysts for routine HR queries by ~60%</li>
+</ul>
+</div>
+<div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div>
+</div>
+
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div>
+<div class="project-header">
+<span class="project-type academic">ACADEMIC</span>
+<h3>ML-Based Influencer ROI Prediction &amp; Marketing Analytics</h3>
+<p>Profitability-focused influencer marketing analytics across 1,000+ campaign records with R&sup2; &asymp; 0.87.</p>
+</div>
+<div class="project-body">
+<div class="project-tech">
+<span class="tech-tag">Random Forest</span><span class="tech-tag">Linear Regression</span><span class="tech-tag">Scikit-learn</span><span class="tech-tag">EDA</span><span class="tech-tag">Python</span>
+</div>
+<ul class="project-features">
+<li>Built Random Forest &amp; Linear Regression models achieving R&sup2; &asymp; 0.87 for ROI prediction across 1,000+ campaigns</li>
+<li>Conducted feature importance analysis revealing micro-influencers (10K&ndash;50K followers) deliver 2.3&times; higher ROI</li>
+<li>Engineered ROI metric by estimating campaign cost and revenue from engagement data</li>
+<li>Data-driven budget reallocation strategy favoring high-engagement micro-influencers</li>
+</ul>
+</div>
+<div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div>
+</div>
+
+<div class="project-card reveal scanline-effect"><div class="glass-reflection"></div>
+<div class="project-header">
+<span class="project-type academic">ACADEMIC</span>
+<h3>RAG-Based Marketing Funnel Analytics System</h3>
+<p>Retrieval-Augmented Generation system using LangChain &amp; vector embeddings for funnel optimization.</p>
+</div>
+<div class="project-body">
+<div class="project-tech">
+<span class="tech-tag">RAG</span><span class="tech-tag">LangChain</span><span class="tech-tag">LLM</span><span class="tech-tag">Vector Embeddings</span><span class="tech-tag">Streamlit</span>
+</div>
+<ul class="project-features">
+<li>Built RAG system using LangChain &amp; vector embeddings to answer complex business questions from uploaded funnel data</li>
+<li>Automated stage-wise conversion analysis with drop-off identification &amp; cohort segmentation</li>
+<li>Data-grounded insights using only uploaded funnel data &mdash; zero hallucination approach</li>
+<li>Interactive Streamlit dashboard for non-technical business users with funnel optimization recommendations</li>
+</ul>
+</div>
+<div class="project-footer"><a href="https://github.com/sujaychoukhande-06" target="_blank" class="project-link primary"><i class="fab fa-github"></i> GitHub</a></div>
+</div>
+
+</div></section>
+<section id="experience"><div class="section-header reveal"><div class="section-tag">Journey</div><h2 class="section-title">Experience &amp; <span class="gradient">Education</span></h2></div>
+<h3 class="timeline-section-title reveal"><div class="ts-icon icon-box cyan"><i class="fas fa-briefcase"></i></div> Professional Experience</h3>
+<div class="timeline">
+<div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card">
+<div class="timeline-date">MAR 2026 &ndash; PRESENT</div>
+<h3>Data Science &amp; AI Intern</h3>
+<h4>Adani Medicity &amp; Research Centre, Ahmedabad</h4>
+<ul>
+<li>Designed &amp; developed full-stack AI-integrated web platform for hospital RDS management &mdash; 280+ fields across 13 clinical sections with role-based auth for 22+ users</li>
+<li>Engineered AI-powered content extraction engine using Groq LLM with spatial-aware text parsing &mdash; reducing manual data entry by ~70%</li>
+<li>Architected 13 specialized AI validation agents with domain-specific prompts &amp; Tavily web search against NABH, JCI, ASHRAE, WHO standards</li>
+<li>Built smart attendance system using OpenCV YuNet (ONNX) deep-learning detector with dual-mode recognition engine (LBPH &amp; dlib 128D embeddings)</li>
+<li>Developed analytics dashboard using Streamlit &amp; Plotly with animated KPIs, trend charts, 7-day forecast, weekly heatmaps &amp; risk alerts</li>
+<li>Authored comprehensive 27-page institutional business proposal with &#x20B9;11.76 Cr financial model &amp; 3-year revenue forecast</li>
+</ul>
+</div></div>
+<div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card">
+<div class="timeline-date">JUL 2022 &ndash; JUL 2025</div>
+<h3>Assistant Manager &mdash; Smart Metering &amp; Revenue Assurance</h3>
+<h4>Adani Electricity Mumbai Limited, Mumbai</h4>
+<ul>
+<li>Analyzed large-scale smart meter and billing datasets to identify abnormal consumption patterns, supporting revenue assurance and loss reduction initiatives</li>
+<li>Led end-to-end smart meter integration for 1.2 lakh+ consumers, ensuring seamless data flow across metering, billing, and customer service platforms</li>
+<li>Performed EDA and statistical validation on historical consumption data to identify trends, seasonality, and billing accuracy improvements</li>
+<li>Designed MIS dashboards and performance reports using Excel-based data models, Python, and visualizations for senior leadership</li>
+<li>Supported commercial expansion including new electricity and EV charging connections through customer segmentation and demand analysis</li>
+<li>Contributed to Kaizen and 5S initiatives, driving process standardization and operational excellence</li>
+</ul>
+</div></div>
+<div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card">
+<div class="timeline-date">JUL 2021 &ndash; AUG 2021</div>
+<h3>Summer Intern</h3>
+<h4>Maharashtra State Electricity Board (MSEB), Chandrapur</h4>
+<ul>
+<li>Gained exposure to end-to-end operations of 2920 MW thermal power plant, including power generation, transmission, and plant operations</li>
+<li>Monitored and analyzed boiler and turbine operational parameters (temperature, pressure) to assess performance trends</li>
+<li>Supported efficiency evaluation under varying operating conditions</li>
+</ul>
+</div></div>
+</div>
+<h3 class="timeline-section-title reveal"><div class="ts-icon icon-box purple"><i class="fas fa-graduation-cap"></i></div> Education</h3>
+<div class="timeline">
+<div class="timeline-item"><div class="timeline-dot" style="border-color:var(--secondary);box-shadow:0 0 12px rgba(179,136,255,0.3)"></div><div class="timeline-card">
+<div class="timeline-date" style="color:var(--secondary)">2025 &ndash; 2027</div>
+<h3>PGDM in AI &amp; Data Science</h3>
+<h4>Adani Institute of Digital Technology Management, Ahmedabad</h4>
+<ul>
+<li>CGPA: 3.81 / 4.33</li>
+<li>Specialization in AI and Data Science</li>
+<li>Focus on ML, Deep Learning, NLP, and Agentic AI</li>
+</ul>
+</div></div>
+<div class="timeline-item"><div class="timeline-dot" style="border-color:var(--secondary);box-shadow:0 0 12px rgba(179,136,255,0.3)"></div><div class="timeline-card">
+<div class="timeline-date" style="color:var(--secondary)">2018 &ndash; 2022</div>
+<h3>B.E. &mdash; Electrical Engineering</h3>
+<h4>K.K. Wagh Institute of Engineering Education &amp; Research, Nashik</h4>
+<ul>
+<li>CGPA: 8.97 / 10.00</li>
+<li>Published international research paper during undergraduate studies</li>
+</ul>
+</div></div>
+</div></section>
 <section id="achievements"><div class="scene-3d" id="achievements-3d"></div><div class="section-header reveal"><div class="section-tag">Recognition</div><h2 class="section-title">Achievements &amp; <span class="gradient">Certifications</span></h2></div><div class="achievements-grid"><div class="achievement-card reveal"><div class="icon-box icon-lg gold"><i class="fas fa-file-alt"></i></div><h3>International Research Publication</h3><p>Published in HBRP Publications on &ldquo;Design and Development of Power Generating Tiles&rdquo; &mdash; prototype demonstration and performance analysis.</p></div><div class="achievement-card reveal"><div class="icon-box icon-lg gold"><i class="fas fa-trophy"></i></div><h3>Top Performer &mdash; Adani Electricity</h3><p>Recognized as Top Performer at Adani Electricity Mumbai Limited for 2 consecutive years.</p></div><div class="achievement-card reveal"><div class="icon-box icon-lg gold"><i class="fas fa-medal"></i></div><h3>SSC Exam Topper</h3><p>Ranked among Top 10 highest-scoring students in SSC Board Examinations.</p></div></div><h3 class="timeline-section-title reveal" style="margin-top:56px"><div class="ts-icon icon-box purple"><i class="fas fa-certificate"></i></div> Certifications</h3><div class="cert-grid"><div class="cert-card reveal"><div class="icon-box icon-sm purple"><i class="fas fa-certificate"></i></div><span>English for Written Communication &mdash; IIT Bombay</span></div><div class="cert-card reveal"><div class="icon-box icon-sm cyan"><i class="fab fa-python"></i></div><span>Python for Data Science &mdash; IBM Developer</span></div><div class="cert-card reveal"><div class="icon-box icon-sm gold"><i class="fas fa-scroll"></i></div><span>Certificate of Publication &mdash; HBRP</span></div><div class="cert-card reveal"><div class="icon-box icon-sm cyan"><i class="fas fa-database"></i></div><span>SQL &amp; Relational Database &mdash; IBM Developer</span></div></div><div class="publication-card reveal" style="margin-top:44px"><div style="display:flex;align-items:center;gap:16px;margin-bottom:14px"><div class="icon-box gold"><i class="fas fa-newspaper"></i></div><h3 style="font-family:var(--font-heading);font-size:18px;color:var(--gold);font-weight:700">Research Publication</h3></div><p style="color:var(--text-secondary);font-size:14px;line-height:1.85;font-weight:300"><strong style="color:var(--text-primary);font-weight:600">Title:</strong> Design and Development of Power Generating Tiles<br><strong style="color:var(--text-primary);font-weight:600">Publisher:</strong> HBRP Publications (International)<br><strong style="color:var(--text-primary);font-weight:600">Highlights:</strong> Prototype demonstration, performance analysis, and energy harvesting from footsteps.</p></div></section>
-<section id="resume"><div class="section-header reveal"><div class="section-tag">Document</div><h2 class="section-title"><span class="gradient">Resume</span></h2></div><div class="resume-container reveal"><div class="resume-preview scanline-effect"><div class="icon-box icon-lg cyan" style="margin:0 auto"><i class="fas fa-file-pdf"></i></div><h3>Sujay Choukhande &mdash; Resume</h3><p>Data Scientist &bull; AI Engineer &bull; Business Analyst<br>3+ Years Experience &bull; PGDM AI &amp; Data Science</p><a href="https://drive.google.com/uc?export=download&id=1VP0rY8vYJsiJZJMWt2J6DXD2imRe0cod" target="_blank" class="btn-download"><i class="fas fa-download"></i> DOWNLOAD RESUME</a><br><a href="https://drive.google.com/file/d/1VP0rY8vYJsiJZJMWt2J6DXD2imRe0cod/view?usp=sharing" target="_blank" class="btn-view-resume"><i class="fas fa-external-link-alt"></i> VIEW IN BROWSER</a></div></div></section>
+<section id="resume"><div class="section-header reveal"><div class="section-tag">Document</div><h2 class="section-title"><span class="gradient">Resume</span></h2></div><div class="resume-container reveal"><div class="resume-preview scanline-effect"><div class="icon-box icon-lg cyan" style="margin:0 auto"><i class="fas fa-file-pdf"></i></div><h3>Sujay Choukhande &mdash; Resume</h3><p>Data Scientist &bull; AI Application Developer &bull; Full-Stack AI Engineer<br>3+ Years Experience &bull; PGDM AI &amp; Data Science</p><a href="https://drive.google.com/uc?export=download&id=1VP0rY8vYJsiJZJMWt2J6DXD2imRe0cod" target="_blank" class="btn-download"><i class="fas fa-download"></i> DOWNLOAD RESUME</a><br><a href="https://drive.google.com/file/d/1VP0rY8vYJsiJZJMWt2J6DXD2imRe0cod/view?usp=sharing" target="_blank" class="btn-view-resume"><i class="fas fa-external-link-alt"></i> VIEW IN BROWSER</a></div></div></section>
 <section id="contact"><div class="section-header reveal"><div class="section-tag">Connect</div><h2 class="section-title">Get In <span class="gradient">Touch</span></h2></div><div class="contact-grid"><div class="contact-info reveal-left"><div class="contact-card"><div class="icon-box icon-sm cyan"><i class="fas fa-envelope"></i></div><div class="info"><h4>Email</h4><a href="mailto:sujaychoukhande@gmail.com">sujaychoukhande@gmail.com</a></div></div><div class="contact-card"><div class="icon-box icon-sm purple"><i class="fas fa-phone"></i></div><div class="info"><h4>Phone</h4><span>+91-9404527730</span></div></div><div class="contact-card"><div class="icon-box icon-sm rose"><i class="fas fa-map-marker-alt"></i></div><div class="info"><h4>Location</h4><span>Ahmedabad, India</span></div></div><div class="contact-card"><div class="icon-box icon-sm gold"><i class="fas fa-building"></i></div><div class="info"><h4>Organization</h4><span>Adani Medicity &amp; Research Centre</span></div></div><div class="social-links"><a href="https://www.linkedin.com/in/sujay-choukhande-365734192/" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="https://github.com/sujaychoukhande-06" target="_blank" class="social-link" title="GitHub"><i class="fab fa-github"></i></a><a href="mailto:sujaychoukhande@gmail.com" class="social-link" title="Email"><i class="fas fa-envelope"></i></a><a href="https://drive.google.com/file/d/1VP0rY8vYJsiJZJMWt2J6DXD2imRe0cod/view?usp=sharing" target="_blank" class="social-link" title="Resume"><i class="fas fa-file-alt"></i></a></div></div><div class="contact-form reveal-right glass-panel"><form onsubmit="event.preventDefault();document.querySelector('.form-success').style.display='flex';this.reset();setTimeout(function(){document.querySelector('.form-success').style.display='none'},3000)"><div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name" required></div><div class="form-group"><label>Your Email</label><input type="email" placeholder="Enter your email" required></div><div class="form-group"><label>Subject</label><input type="text" placeholder="What is this about?"></div><div class="form-group"><label>Message</label><textarea placeholder="Write your message..."></textarea></div><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center"><i class="fas fa-paper-plane"></i> SEND MESSAGE</button><div class="form-success" style="display:none;margin-top:14px;padding:14px;border-radius:10px;background:var(--primary-dim);border:1px solid rgba(0,229,255,0.15);color:var(--primary);font-family:var(--font-heading);font-size:13px;align-items:center;justify-content:center;gap:8px"><i class="fas fa-check-circle"></i> Message received!</div></form></div></div></section>
 <footer><div style="display:flex;justify-content:center;gap:14px;margin-bottom:18px"><a href="https://www.linkedin.com/in/sujay-choukhande-365734192/" target="_blank" class="social-link" style="width:34px;height:34px;font-size:14px"><i class="fab fa-linkedin-in"></i></a><a href="https://github.com/sujaychoukhande-06" target="_blank" class="social-link" style="width:34px;height:34px;font-size:14px"><i class="fab fa-github"></i></a><a href="mailto:sujaychoukhande@gmail.com" class="social-link" style="width:34px;height:34px;font-size:14px"><i class="fas fa-envelope"></i></a></div><p>Designed with <span class="heart">&hearts;</span> by Sujay Choukhande &bull; &copy; 2026</p></footer>
 <script>
